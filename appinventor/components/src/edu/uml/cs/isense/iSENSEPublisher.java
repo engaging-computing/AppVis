@@ -164,6 +164,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     YailList fields; 
     YailList data; 
     String path; 
+    int datasetid;
 
     // Normal dataset 
     DataObject(String name, YailList fields, YailList data) {
@@ -171,6 +172,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       this.fields = fields;
       this.data = data; 
       this.path = ""; 
+      this.datasetid = -1;
     }
 
     // Dataset with photo
@@ -179,6 +181,16 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       this.fields = fields;
       this.data = data; 
       this.path = path; 
+      this.datasetid = -1;
+    }
+
+    // Append to existing data setReadable
+    DataObject(int datasetid, YailList fields, YailList data) {
+      this.name = "";
+      this.fields = fields;
+      this.data = data;
+      this.path = "";
+      this.datasetid = datasetid;
     }
   }
 
