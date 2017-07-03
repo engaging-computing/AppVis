@@ -320,8 +320,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   @SimpleEvent(description = "iSENSE Upload Data Set Succeeded")
-    public void UploadDataSetSucceeded(int datasetId) {
-      EventDispatcher.dispatchEvent(this, "UploadDataSetSucceeded", datasetId);
+    public void UploadDataSetSucceeded(int DataSetID) {
+      EventDispatcher.dispatchEvent(this, "UploadDataSetSucceeded", DataSetID);
     }
 
   @SimpleEvent(description = "iSENSE Upload Data Set Failed")
