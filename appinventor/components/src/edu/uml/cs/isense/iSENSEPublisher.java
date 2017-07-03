@@ -271,7 +271,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         }
       }
 
-
+      int dataSetId = -1;
+      // are we uploading a new data set?
       if (!dob.name.equals("")) {
         // login with contributor key
         Calendar cal = Calendar.getInstance();
@@ -279,7 +280,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         String date = " - " + sdf.format(cal.getTime()).toString();
         uInfo = api.uploadDataSet(ProjectID, jData, dob.name + date, ContributorKey, CONTRIBUTORNAME); 
 
-        int dataSetId = uInfo.dataSetId; 
+        dataSetId = uInfo.dataSetId; 
         Log.i("iSENSE", "JSON Upload: " + jData.toString()); 
         Log.i("iSENSE", "Dataset ID: " + dataSetId); 
         if (dataSetId == -1) {
@@ -287,6 +288,19 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           return -1; 
         }
       }
+
+      // are we appending to existing data set?
+      if (dob.datasetid != -1) {
+        uInfo = api.appendDataSetData(dob.datasetid, jData, ContributorKey);
+        dataSetId = uInfo.dataSetId; 
+        Log.i("iSENSE", "JSON Upload: " + jData.toString()); 
+        Log.i("iSENSE", "Dataset ID: " + dataSetId); 
+        if (dataSetId == -1) {
+          Log.e("iSENSE", "Append failed! Check your contributor key and project ID."); 
+          return -1; 
+        }
+      }
+    
 
       // do we have a photo to upload? 
       if (!dob.path.equals("")) {
