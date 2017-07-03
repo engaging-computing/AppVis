@@ -284,7 +284,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "JSON Upload: " + jData.toString()); 
         Log.i("iSENSE", "Dataset ID: " + dataSetId); 
         if (dataSetId == -1) {
-          Log.e("iSENSE", "Upload failed! Check your contributor key and project ID."); 
+          Log.e("iSENSE", "Append failed! Check your contributor key and project ID."); 
           return -1; 
         }
       }
