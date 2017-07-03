@@ -159,7 +159,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
     // Append to existing data set
   @SimpleFunction(description = "Append new row of data to existing data set.")
-    public void UploadDataSet(final String DataSetID, final YailList Fields, final YailList Data) {
+    public void AppendToDataSet(final int DataSetID, final YailList Fields, final YailList Data) {
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetID, Fields, Data);
       if (pending.size() >= QUEUEDEPTH) {
