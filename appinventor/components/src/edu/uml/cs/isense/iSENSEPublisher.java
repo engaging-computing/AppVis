@@ -155,6 +155,20 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       pending.add(dob); 
       numPending++;
       new UploadTask().execute(); 
+    }
+
+    // Append to existing data set
+  @SimpleFunction(description = "Append new row of data to existing data set.")
+    public void UploadDataSet(final String DataSetID, final YailList Fields, final YailList Data) {
+      // Create new "DataObject" and add to upload queue
+      DataObject dob = new DataObject(DataSetID, Fields, Data);
+      if (pending.size() >= QUEUEDEPTH) {
+        UploadDataSetFailed();
+        return;
+      }
+      pending.add(dob);
+      numPending++;  
+      new UploadTask().execute(); 
     } 
 
   // Private class that gives us a data structure with info for uploading a dataset
