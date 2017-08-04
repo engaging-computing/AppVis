@@ -62,6 +62,10 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   private int ProjectID;
   private String ContributorKey;
+  private String VisType;
+  private String LiveURL = "http://isenseproject.org";
+  private String DevURL = "http://dev.isenseproject.org";
+  private boolean UseDev;
   private LinkedList<DataObject> pending; 
   private final API api;
   private static Activity activity; 
@@ -101,6 +105,31 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
     public void ContributorKey(String ContributorKey) {
       this.ContributorKey = ContributorKey;
+    }
+
+    // Vis Type
+  @SimpleProperty(description = "Visualization Type", category = PropertyCategory.BEHAVIOR)
+    public String VisType() {
+      return VisType;
+    }
+
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
+    @SimpleProperty(description = "Visualization Type", category = PropertyCategory.BEHAVIOR)
+    public void VisType(String VisType) {
+      this.VisType = VisType;
+    }
+
+    //Use Dev
+  @SimpleProperty(description = "Use Development Server", category = PropertyCategory.BEHAVIOR) 
+    public boolean UseDev() {
+      return UseDev;
+    }
+
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_BOOLEAN) 
+    @SimpleProperty(description = "Use Development Server", category = PropertyCategory.BEHAVIOR)
+    public void UseDev(boolean UseDev) {
+      this.UseDev = UseDev;
+      api.useDev(UseDev);
     }
 
   // Block Functions
@@ -353,13 +382,21 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   // Get visualization url for this project
   @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format.")
     public String GetVisURL() {
-      return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?presentation=true";
+      if (UseDev) {
+        return DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + VisType; 
+      } else {
+        return LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + VisType;
+      }
     }
 
   // Get visualization url with controls for this project
   @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
     public String GetVisWithControlsURL() {
-      return "https://isenseproject.org/projects/" + ProjectID + "/data_sets?embed=true";
+      if (UseDev) {
+        return DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + VisType;
+      } else {
+        return LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + VisType;
+      } 
     }
 
   @SimpleEvent(description = "iSENSE Upload Data Set Succeeded")
