@@ -77,10 +77,15 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     api = API.getInstance();
     ProjectID(-1); 
     ContributorKey(""); 
+    VisType("");
+    UseDev = false;
+    if(UseDev) {
+      api.useDev(UseDev);
+    }
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
     numPending = 0;
-  } 
+  }
 
   // Block Properties
   // ProjectID
@@ -117,19 +122,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "Visualization Type", category = PropertyCategory.BEHAVIOR)
     public void VisType(String VisType) {
       this.VisType = VisType;
-    }
-
-    //Use Dev
-  @SimpleProperty(description = "Use Development Server", category = PropertyCategory.BEHAVIOR) 
-    public boolean UseDev() {
-      return UseDev;
-    }
-
-  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_BOOLEAN) 
-    @SimpleProperty(description = "Use Development Server", category = PropertyCategory.BEHAVIOR)
-    public void UseDev(boolean UseDev) {
-      this.UseDev = UseDev;
-      api.useDev(UseDev);
     }
 
   // Block Functions
