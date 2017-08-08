@@ -119,19 +119,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       this.VisType = VisType;
     }
 
-    //Use Dev
-  @SimpleProperty(description = "Use Development Server", category = PropertyCategory.BEHAVIOR) 
-    public boolean UseDev() {
-      return UseDev;
-    }
-
-  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_BOOLEAN) 
-    @SimpleProperty(description = "Use Development Server", category = PropertyCategory.BEHAVIOR)
-    public void UseDev(boolean UseDev) {
-      this.UseDev = UseDev;
-      api.useDev(UseDev);
-    }
-
   // Block Functions
   // Upload Data Set in Background
   @SimpleFunction(description = "Upload Data Set to iSENSE")
