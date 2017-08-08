@@ -65,8 +65,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private String VisType;
   private String LiveURL = "http://isenseproject.org";
   private String DevURL = "http://dev.isenseproject.org";
-  private boolean UseDev;
-  private LinkedList<DataObject> pending; 
+  private LinkedList<DataObject> pending;
+  private boolean UseDev; 
   private final API api;
   private static Activity activity; 
   private int numPending;
@@ -77,6 +77,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     api = API.getInstance();
     ProjectID(-1); 
     ContributorKey(""); 
+    UseDev = false;
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
     numPending = 0;
