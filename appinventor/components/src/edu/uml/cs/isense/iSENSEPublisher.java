@@ -54,6 +54,18 @@ import edu.uml.cs.isense.objects.RProjectField;
 @UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
 @UsesLibraries(libraries = "isense.jar")
 
+static final int DEFAULT_VIS = 0;
+static final int MAP_VIS = 1;
+static final int TIMELINE_VIS = 2;
+static final int SCATTER_VIS = 3;
+static final int BAR_VIS = 4;
+static final int HISTOGRAM_VIS = 5;
+static final int BOX_VIS = 6;
+static final int PIE_VIS = 7;
+static final int TABLE_VIS = 8;
+static final int SUMMARY_VIS = 9;
+static final int PHOTOS_VIS = 10;
+
 public final class iSENSEPublisher extends AndroidNonvisibleComponent implements Component {
 
   public static final int VERSION = 1; 
