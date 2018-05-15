@@ -1,4 +1,3 @@
-//package edu.uml.cs.isense; 
 package com.google.appinventor.components.runtime;
 
 import android.content.Context;
@@ -38,7 +37,7 @@ import android.webkit.WebViewClient;
     "in presentation mode (or embedded mode). This is intended to work " + 
     "only with isenseproject.org.")
 
-@SimpleObject(external = true)
+@SimpleObject
 @UsesPermissions(permissionNames = "android.permission.INTERNET")
 public final class iSENSEViewer extends AndroidViewComponent {
 
