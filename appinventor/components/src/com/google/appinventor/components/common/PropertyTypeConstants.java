@@ -253,4 +253,9 @@ public class PropertyTypeConstants {
    * See {@link com.google.appinventor.client.widgets.properties.ScalingChoicePropertyEditor}
    */
    public static final String PROPERTY_TYPE_SCALING = "scaling";
+
+   /**
+    * appvis-component editor. @see package com.google.appinventor.client.editor.youngandroid.properties
+    */
+  public static final String PROPERTY_TYPE_VIS = "vis";
 }
