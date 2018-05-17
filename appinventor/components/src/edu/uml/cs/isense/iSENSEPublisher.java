@@ -73,8 +73,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private static final int QUEUEDEPTH = 30;
 
   private int ProjectID;
+  private int VisType;
   private String ContributorKey;
-  private String VisType;
   private String LiveURL = "http://isenseproject.org";
   private String DevURL = "http://dev.isenseproject.org";
   private boolean UseDev;
@@ -89,7 +89,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     api = API.getInstance();
     ProjectID(-1); 
     ContributorKey(""); 
-    VisType("");
+    VisType(DEFAULT_VIS);
     UseDev = false;
     if(UseDev) {
       api.useDev(UseDev);
@@ -126,13 +126,13 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
     // Vis Type
   @SimpleProperty(description = "Visualization Type", category = PropertyCategory.BEHAVIOR)
-    public String VisType() {
+    public int VisType() {
       return VisType;
     }
 
   @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_VIS)
     @SimpleProperty(description = "Visualization Type", category = PropertyCategory.BEHAVIOR)
-    public void VisType(String VisType) {
+    public void VisType(int VisType) {
       this.VisType = VisType;
     }
 
@@ -386,20 +386,91 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   // Get visualization url for this project
   @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format.")
     public String GetVisURL() {
+      String visLinkParams;
+      switch(VisType) {
+        case DEFAULT_VIS:
+          visLinkParams = "";
+          break;
+        case MAP_VIS:
+          visLinkParams = "Map";
+          break;
+         case TIMELINE_VIS:
+          visLinkParams = "Timeline";
+          break;
+         case SCATTER_VIS:
+          visLinkParams = "Scatter";
+          break;
+         case BAR_VIS:
+          visLinkParams = "Bar";
+          break;
+         case HISTOGRAM_VIS:
+          visLinkParams = "Histogram";
+          break;
+         case BOX_VIS:
+          visLinkParams = "Box";
+          break;
+         case PIE_VIS:
+          visLinkParams = "Pie";
+          break;
+         case TABLE_VIS:
+          visLinkParams = "Table";
+          break;
+         case SUMMARY_VIS:
+          visLinkParams = "Summary";
+          break;
+         case PHOTOS_VIS:
+          visLinkParams = "Photos";
+          break;
+         default: visLinkParams = "";
+       }
       if (UseDev) {
-        return DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + VisType; 
+        return DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + visLinkParams; 
       } else {
-        return LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + VisType;
+        return LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + visLinkParams;
       }
     }
 
   // Get visualization url with controls for this project
   @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
     public String GetVisWithControlsURL() {
+      String visLinkParams;
+      switch(VisType) {
+        case MAP_VIS:
+          visLinkParams = "Map";
+          break;
+         case TIMELINE_VIS:
+          visLinkParams = "Timeline";
+          break;
+         case SCATTER_VIS:
+          visLinkParams = "Scatter";
+          break;
+         case BAR_VIS:
+          visLinkParams = "Bar";
+          break;
+         case HISTOGRAM_VIS:
+          visLinkParams = "Histogram";
+          break;
+         case BOX_VIS:
+          visLinkParams = "Box";
+          break;
+         case PIE_VIS:
+          visLinkParams = "Pie";
+          break;
+         case TABLE_VIS:
+          visLinkParams = "Table";
+          break;
+         case SUMMARY_VIS:
+          visLinkParams = "Summary";
+          break;
+         case PHOTOS_VIS:
+          visLinkParams = "Photos";
+          break;
+         default: visLinkParams = "";
+       }
       if (UseDev) {
-        return DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + VisType;
+        return DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + visLinkParams;
       } else {
-        return LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + VisType;
+        return LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + visLinkParams;
       } 
     }
 
