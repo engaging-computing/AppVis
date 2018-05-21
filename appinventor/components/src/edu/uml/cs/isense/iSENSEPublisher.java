@@ -388,9 +388,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public String GetVisURL() {
       String visLinkParams;
       switch(VisType) {
-        case DEFAULT_VIS:
-          visLinkParams = "";
-          break;
         case MAP_VIS:
           visLinkParams = "Map";
           break;
@@ -465,7 +462,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
          case PHOTOS_VIS:
           visLinkParams = "Photos";
           break;
-         default: visLinkParams = "";
+         default: visLinkParams = "Default";
        }
       if (UseDev) {
         return DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + visLinkParams;
