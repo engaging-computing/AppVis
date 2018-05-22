@@ -67,7 +67,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private String LiveURL = "http://isenseproject.org";
   private String DevURL = "http://dev.isenseproject.org";
   private boolean UseDev;
-  private boolean newProjectID;
   private LinkedList<DataObject> pending; 
   private RProject project;
   private final API api;
@@ -82,7 +81,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     ContributorKey(""); 
     VisType("");
     UseDev = false;
-    newProjectID = true;
     if(UseDev) {
       api.useDev(UseDev);
     }
@@ -103,17 +101,21 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
+      project = api.getProject(ProjectID);
     }
   
   //ISense project name
   @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
     public String ProjectName() {
-      if(newProjectID) {
-        project = api.getProject(ProjectID);
-        newProjectID = false;
-      }
       return project.name;
     }
+  
+    //ISense like count
+  @SimpleProperty(description = "iSENSE Like Count", category = PropertyCategory.BEHAVIOR)
+    public int LikeCount() {
+      return project.like_count;
+    }
+
 
 
   // Contributor Key
