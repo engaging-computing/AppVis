@@ -110,14 +110,24 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       return project.name;
     }
   
-    //ISense like count
-  @SimpleProperty(description = "iSENSE Like Count", category = PropertyCategory.BEHAVIOR)
-    public int LikeCount() {
+  //ISense like count
+  @SimpleProperty(description = "iSENSE Project Like Count", category = PropertyCategory.BEHAVIOR)
+    public int ProjectLikeCount() {
       return project.like_count;
     }
 
+  //ISense project author
+  @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
+    public String ProjectAuthor() {
+      return project.owner_name;
+    }
 
-
+  //ISense project creation date
+  @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
+    public String ProjectDateCreated() {
+      return project.timecreated;
+    }
+ 
   // Contributor Key
   @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
     public String ContributorKey() {
