@@ -101,7 +101,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
-      project = api.getProject(ProjectID);
+      this.project = api.getProject(ProjectID);
     }
   
   //ISense project name
@@ -123,11 +123,30 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense project creation date
-  @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Creation Date", category = PropertyCategory.BEHAVIOR)
     public String ProjectDateCreated() {
       return project.timecreated;
     }
  
+  //ISense project owner url
+  @SimpleProperty(description = "iSENSE Project Account URL", category = PropertyCategory.BEHAVIOR)
+    public String ProjectOwnerURL() {
+      return project.owner_url;
+    }
+  
+  //ISense project isHidden?
+  @SimpleProperty(description = "iSENSE Project isHidden. Returns true if hidden, flase if visible", category = PropertyCategory.BEHAVIOR)
+    public boolean ProjecctIsHidden() {
+      return project.hidden;
+    }
+ 
+  //ISense project isFeatured?
+  @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, flase if normal", category = PropertyCategory.BEHAVIOR)
+    public boolean ProjecctIsFeatured() {
+      return project.featured;
+    }
+ 
+
   // Contributor Key
   @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
     public String ContributorKey() {
