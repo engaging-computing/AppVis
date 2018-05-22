@@ -66,14 +66,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private String VisType;
   private String LiveURL = "http://isenseproject.org";
   private String DevURL = "http://dev.isenseproject.org";
-<<<<<<< HEAD
-  private LinkedList<DataObject> pending;
-  private boolean UseDev; 
-=======
   private boolean UseDev;
   private LinkedList<DataObject> pending; 
   private RProject project;
->>>>>>> dev_extension
   private final API api;
   private static Activity activity; 
   private int numPending;
@@ -84,16 +79,12 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     api = API.getInstance();
     ProjectID(-1); 
     ContributorKey(""); 
-<<<<<<< HEAD
-    UseDev = false;
-=======
     VisType("");
     UseDev = false;
     if(UseDev) {
       api.useDev(UseDev);
     }
     project = api.getProject(ProjectID);
->>>>>>> dev_extension
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
     numPending = 0;
@@ -413,20 +404,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       return YailList.makeList(result); 
     }
   
-  // Get all Data Set IDs associated with current project
-  @SimpleFunction(description = "Get all Data Set IDs for the current project")
-    public YailList GetAllDataSetIDs() {
-      ArrayList<Integer> result = api.getDataSetIDs(ProjectID);
-      return YailList.makeList(result);
-    }
-
-  // Get all Data from Field for a certain Data Set
-  @SimpleFunction(description = "Get the Data from a certain Field from one Data Set")
-   public YailList GetDataFromDataSetByField(final String Field, final int DataSetID) {
-     ArrayList<String> result = api.getFieldFromDataSet(ProjectID, Field, DataSetID);
-     return YailList.makeList(result);
-   }
-
   // Get Time (formatted for iSENSE Upload)
   @SimpleFunction(description = "Gets the current time. It is formatted correctly for iSENSE")
     public String GetTime() {
