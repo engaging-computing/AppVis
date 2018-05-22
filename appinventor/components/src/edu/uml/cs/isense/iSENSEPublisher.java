@@ -42,6 +42,7 @@ import edu.uml.cs.isense.api.UploadInfo;
 import edu.uml.cs.isense.objects.RDataSet;
 import edu.uml.cs.isense.objects.RPerson;
 import edu.uml.cs.isense.objects.RProjectField;
+import edu.uml.cs.isense.objects.RProject;
 
 
 @DesignerComponent(version = iSENSEPublisher.VERSION,
@@ -66,7 +67,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private String LiveURL = "http://isenseproject.org";
   private String DevURL = "http://dev.isenseproject.org";
   private boolean UseDev;
+  private boolean newProjectID;
   private LinkedList<DataObject> pending; 
+  private RProject project;
   private final API api;
   private static Activity activity; 
   private int numPending;
@@ -79,9 +82,11 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     ContributorKey(""); 
     VisType("");
     UseDev = false;
+    newProjectID = true;
     if(UseDev) {
       api.useDev(UseDev);
     }
+    project = api.getProject(ProjectID);
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
     numPending = 0;
@@ -99,6 +104,17 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
     }
+  
+  //ISense project name
+  @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
+    public String ProjectName() {
+      if(newProjectID) {
+        project = api.getProject(ProjectID);
+        newProjectID = false;
+      }
+      return project.name;
+    }
+
 
   // Contributor Key
   @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
