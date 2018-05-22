@@ -42,6 +42,7 @@ import edu.uml.cs.isense.api.UploadInfo;
 import edu.uml.cs.isense.objects.RDataSet;
 import edu.uml.cs.isense.objects.RPerson;
 import edu.uml.cs.isense.objects.RProjectField;
+import edu.uml.cs.isense.objects.RProject;
 
 
 @DesignerComponent(version = iSENSEPublisher.VERSION,
@@ -65,8 +66,14 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private String VisType;
   private String LiveURL = "http://isenseproject.org";
   private String DevURL = "http://dev.isenseproject.org";
+<<<<<<< HEAD
   private LinkedList<DataObject> pending;
   private boolean UseDev; 
+=======
+  private boolean UseDev;
+  private LinkedList<DataObject> pending; 
+  private RProject project;
+>>>>>>> dev_extension
   private final API api;
   private static Activity activity; 
   private int numPending;
@@ -77,11 +84,20 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     api = API.getInstance();
     ProjectID(-1); 
     ContributorKey(""); 
+<<<<<<< HEAD
     UseDev = false;
+=======
+    VisType("");
+    UseDev = false;
+    if(UseDev) {
+      api.useDev(UseDev);
+    }
+    project = api.getProject(ProjectID);
+>>>>>>> dev_extension
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
     numPending = 0;
-  } 
+  }
 
   // Block Properties
   // ProjectID
@@ -94,7 +110,51 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
+      this.project = api.getProject(ProjectID);
     }
+  
+  //ISense project name
+  @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
+    public String ProjectName() {
+      return project.name;
+    }
+  
+  //ISense like count
+  @SimpleProperty(description = "iSENSE Project Like Count", category = PropertyCategory.BEHAVIOR)
+    public int ProjectLikeCount() {
+      return project.like_count;
+    }
+
+  //ISense project author
+  @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
+    public String ProjectAuthor() {
+      return project.owner_name;
+    }
+
+  //ISense project creation date
+  @SimpleProperty(description = "iSENSE Project Creation Date", category = PropertyCategory.BEHAVIOR)
+    public String ProjectDateCreated() {
+      return project.timecreated;
+    }
+ 
+  //ISense project owner url
+  @SimpleProperty(description = "iSENSE Project Account URL", category = PropertyCategory.BEHAVIOR)
+    public String ProjectOwnerURL() {
+      return project.owner_url;
+    }
+  
+  //ISense project isHidden?
+  @SimpleProperty(description = "iSENSE Project isHidden. Returns true if hidden, flase if visible", category = PropertyCategory.BEHAVIOR)
+    public boolean ProjecctIsHidden() {
+      return project.hidden;
+    }
+ 
+  //ISense project isFeatured?
+  @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, flase if normal", category = PropertyCategory.BEHAVIOR)
+    public boolean ProjecctIsFeatured() {
+      return project.featured;
+    }
+ 
 
   // Contributor Key
   @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
