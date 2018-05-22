@@ -399,9 +399,11 @@ public class YaVersion {
   // - LABEL_COMPONENT_VERSION was incremented to 4
   // For YOUNG_ANDROID_VERSION 158: 
   // - iSENSE was removed
-  // - Added HorizontalScrollArrangement and VerticalScrollArrangement
+  // Added HorizontalScrollArrangement and VerticalScrollArrangement
+  // For YOUNG_ANDROID_VERSION 159:
+  // - FORM_COMPONENT_VERSION was incremented to 20
 
-  public static final int YOUNG_ANDROID_VERSION = 158;
+  public static final int YOUNG_ANDROID_VERSION = 159;
 
   // ............................... Blocks Language Version Number ...............................
 
@@ -461,6 +463,7 @@ public class YaVersion {
   // The number-convert blocks was added
   // For BLOCKS_LANGUAGE_VERSION 20:
   // - Spelling of "Obsfucate" was corrected to Obfuscate in Text Block
+
   public static final int BLOCKS_LANGUAGE_VERSION = 20;
 
   // ................................. Component Version Numbers ..................................
@@ -687,8 +690,10 @@ public class YaVersion {
   // - Screen.CompatibilityMode property morphed into the
   //   Sizing property
   // For FORM_COMPONENT_VERSION 19:
-  // - HideKeyboard method added. 
-  public static final int FORM_COMPONENT_VERSION = 19;
+  // - Added HideKeyboard method
+  // For FORM_COMPONENT_VERSION 20:
+  // - The Screen.ShowListsAsJson property was added
+  public static final int FORM_COMPONENT_VERSION = 20;
 
   // For FUSIONTABLESCONTROL_COMPONENT_VERSION 2:
   // - The Fusiontables API was migrated from SQL to V1
@@ -1087,10 +1092,10 @@ public class YaVersion {
 
   public static final String ACCEPTABLE_COMPANION_PACKAGE = "edu.mit.appinventor.aicompanion3";
 
-  public static final String PREFERRED_COMPANION = "2.39";
+  public static final String PREFERRED_COMPANION = "2.40";
   public static final String COMPANION_UPDATE_URL = "";
   public static final String COMPANION_UPDATE_URL1 = "";
-  public static final String [] ACCEPTABLE_COMPANIONS = { "2.39" };
+  public static final String [] ACCEPTABLE_COMPANIONS = { "2.40" };
 
   // Splash Screen Values
   public static final int SPLASH_SURVEY = 1;

@@ -3028,6 +3028,10 @@ public interface OdeMessages extends Messages {
   @Description("")
   String SizingProperties();
 
+  @DefaultMessage("ShowListsAsJson")
+  @Description("")
+  String ShowListsAsJsonProperties();
+
   @DefaultMessage("Visible")
   @Description("")
   String VisibleProperties();
