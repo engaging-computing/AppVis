@@ -102,12 +102,61 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
   //login
   @SimpleFunction(description = "Log the user in with the current credentials")
     public void LogInUser() {
-
+      session = api.createSession(username, password);
     }
    
   //logout
   @SimpleFunction(description = "Log the current user out")
     public void LogOutUser() {
+      api.deleteSession();
+    }
+  
+  //ListProjects
+  @SimpleFunction(description = "Lists all of the projects owned by the current user")
+    public void ListProjects() {
 
     }
+ 
+  //GetProject
+  @SimpleFunction(description = "Loads the project (By ID? By Name?)")
+    public void GetProject() {
+
+    }
+ 
+  //AddKeyToProject
+  @SimpleFunction(description = "Adds a contributor key to the project provided")
+    public void AddKeyToProject() {
+
+    }
+ 
+  //AddFieldToProject
+  @SimpleFunction(description = "Adds a field to the project provided")
+    public void AddFieldToProject() {
+
+    }
+ 
+  //RemoveKey
+  @SimpleFunction(description = "Removes a contributor key")
+    public void RemoveKey() {
+      
+    }
+ 
+  //RemoveField
+  @SimpleFunction(description = "Removes a data field")
+    public void RemoveField() {
+
+    }
+ 
+  //CreateProject
+  @SimpleFunction(description = "Creates a new project that is owned by the user")
+    public void CreateProject() {
+
+    }
+ 
+  //DeleteProject
+  @SimpleFunction(description = "Delete a project owned by the user")
+    public void DeleteProject() {
+
+    }
+ 
 }
