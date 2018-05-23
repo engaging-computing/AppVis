@@ -61,6 +61,7 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
 
   private String username;
   private String password;
+  private RProject project;
   private RPerson session;
   private final API api;
   
@@ -113,13 +114,23 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
   
   //ListProjects
   @SimpleFunction(description = "Lists all of the projects owned by the current user")
-    public void ListProjects() {
+    public YailList ListProjects() {
 
+      YailList result = new YailList();
+      
+      ArrayList<RProject> rProjects = api.getProjects(1, 50, true, 1, username);
+      //if the username is equal to the project's username, add it to the list
+      for(RProject p : rProjects) {
+        if(p.owner_name == username) {
+          result.add(p);
+        }
+      }
+      return result;
     }
  
   //GetProject
-  @SimpleFunction(description = "Loads the project (By ID? By Name?)")
-    public void GetProject() {
+  @SimpleFunction(description = "Gets a list of project ids that have the same name as projectName")
+    public void GetProjectByName(String projectName) {
 
     }
  
