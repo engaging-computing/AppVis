@@ -61,6 +61,7 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
 
   private String username;
   private String password;
+  private RPerson session;
   private final API api;
   
   public iSENSEUserSession(ComponentContainer container) {
@@ -71,5 +72,30 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
     this.username = "";
     this.password = "";
   }
+
+  //Block Properties
+  //username
+  @SimpleProperty(description = "iSENSE Username", category = PropertyCategory.BEHAVIOR)
+    public String Username() {
+      return username;
+    }
+  
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
+    @SimpleProperty(description = "iSENSE Username", category = PropertyCategory.BEHAVIOR)
+    public void Username(String username) {
+      this.username = username;
+    }
+
+  //password
+  @SimpleProperty(description = "iSENSE Password", category = PropertyCategory.BEHAVIOR)
+    public String Password() {
+      return password;
+    }
+  
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
+    @SimpleProperty(description = "iSENSE Password", category = PropertyCategory.BEHAVIOR)
+    public void Password(String password) {
+      this.password = password;
+    }
 
 }
