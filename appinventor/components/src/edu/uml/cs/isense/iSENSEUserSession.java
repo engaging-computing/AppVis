@@ -134,8 +134,8 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
 
       YailList result = new YailList();
       
-      //TODO: find a way of querying all projects
-      ArrayList<RProject> rProjects = api.getProjects(1, -1, true, 1, "");
+      //TODO: find a way of querying all projects on ISense
+      ArrayList<RProject> rProjects = api.getProjects(1, -1, true, 1,projectName); 
       //if the username is equal to the project's username, add it to the list
       for(RProject p : rProjects) {
         if(p.name == projectName) {
