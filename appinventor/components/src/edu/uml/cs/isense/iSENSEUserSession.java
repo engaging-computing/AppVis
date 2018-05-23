@@ -98,4 +98,16 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
       this.password = password;
     }
 
+  //Block functions
+  //login
+  @SimpleFunction(description = "Log the user in with the current credentials")
+    public void LogInUser() {
+
+    }
+   
+  //logout
+  @SimpleFunction(description = "Log the current user out")
+    public void LogOutUser() {
+
+    }
 }
