@@ -132,6 +132,16 @@ public final class iSENSEUserSession extends AndroidNonvisibleComponent implemen
   @SimpleFunction(description = "Gets a list of project ids that have the same name as projectName")
     public void GetProjectByName(String projectName) {
 
+      YailList result = new YailList();
+      
+      //TODO: find a way of querying all projects
+      ArrayList<RProject> rProjects = api.getProjects(1, -1, true, 1, "");
+      //if the username is equal to the project's username, add it to the list
+      for(RProject p : rProjects) {
+        if(p.name == projectName) {
+          result.add(p);
+        }
+      }
     }
  
   //AddKeyToProject
