@@ -449,34 +449,34 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
       switch(VisType){
         case MAP_VIS:
-          url+= "Map";
+          url += "Map";
           break;
         case TIMELINE_VIS:
-          url+= "Timeline";
+          url += "Timeline";
           break;
         case SCATTER_VIS:
-          url+= "Scatter";
+          url += "Scatter";
           break;
         case BAR_VIS:
-          url+= "Bar";
+          url += "Bar";
           break;
         case HISTOGRAM_VIS:
-          url+= "Histogram";
+          url += "Histogram";
           break;
         case BOX_VIS:
-          url+= "Box";
+          url += "Box";
           break;
         case PIE_VIS:
-          url+= "Pie";
+          url += "Pie";
           break;
         case TABLE_VIS:
-          url+= "Table";
+          url += "Table";
           break;
         case SUMMARY_VIS:
-          url+= "Summary";
+          url += "Summary";
           break;
         case PHOTOS_VIS:
-          url+= "Photos";
+          url += "Photos";
           break;
         default: break;
       }
