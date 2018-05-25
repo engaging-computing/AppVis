@@ -61,17 +61,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private static final String CONTRIBUTORNAME = "AppVis"; 
   private static final int QUEUEDEPTH = 30;
 
-  private static final int MAP_VIS = 0;
-  private static final int TIMELINE_VIS = 1;
-  private static final int SCATTER_VIS = 2;
-  private static final int BAR_VIS = 3;
-  private static final int HISTOGRAM_VIS = 4;
-  private static final int BOX_VIS = 5;
-  private static final int PIE_VIS = 6;
-  private static final int TABLE_VIS = 7;
-  private static final int SUMMARY_VIS = 8;
-  private static final int PHOTOS_VIS = 9;
-
   private int ProjectID;
   private String ContributorKey;
   private String VisType;
@@ -448,34 +437,34 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         url = LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
       }
       switch(VisType){
-        case MAP_VIS:
+        case iSENSEVisType.MAP_VIS:
           url += "Map";
           break;
-        case TIMELINE_VIS:
+        case iSENSEVisType.TIMELINE_VIS:
           url += "Timeline";
           break;
-        case SCATTER_VIS:
+        case iSENSEVisType.SCATTER_VIS:
           url += "Scatter";
           break;
-        case BAR_VIS:
+        case iSENSEVisType.BAR_VIS:
           url += "Bar";
           break;
-        case HISTOGRAM_VIS:
+        case iSENSEVisType.HISTOGRAM_VIS:
           url += "Histogram";
           break;
-        case BOX_VIS:
+        case iSENSEVisType.BOX_VIS:
           url += "Box";
           break;
-        case PIE_VIS:
+        case iSENSEVisType.PIE_VIS:
           url += "Pie";
           break;
-        case TABLE_VIS:
+        case iSENSEVisType.TABLE_VIS:
           url += "Table";
           break;
-        case SUMMARY_VIS:
+        case iSENSEVisType.SUMMARY_VIS:
           url += "Summary";
           break;
-        case PHOTOS_VIS:
+        case iSENSEVisType.PHOTOS_VIS:
           url += "Photos";
           break;
         default: break;
@@ -493,6 +482,51 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       } 
     }
 
+  // Get visualization url with controls for this project
+  @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
+    public String GetVisWithControlsURL(int VisType) {
+      String url;
+      if (UseDev) {
+        url = DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=";
+      } else {
+        url = LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=";
+      } 
+      switch(VisType){
+        case iSENSEVisType.MAP_VIS:
+          url += "Map";
+          break;
+        case iSENSEVisType.TIMELINE_VIS:
+          url += "Timeline";
+          break;
+        case iSENSEVisType.SCATTER_VIS:
+          url += "Scatter";
+          break;
+        case iSENSEVisType.BAR_VIS:
+          url += "Bar";
+          break;
+        case iSENSEVisType.HISTOGRAM_VIS:
+          url += "Histogram";
+          break;
+        case iSENSEVisType.BOX_VIS:
+          url += "Box";
+          break;
+        case iSENSEVisType.PIE_VIS:
+          url += "Pie";
+          break;
+        case iSENSEVisType.TABLE_VIS:
+          url += "Table";
+          break;
+        case iSENSEVisType.SUMMARY_VIS:
+          url += "Summary";
+          break;
+        case iSENSEVisType.PHOTOS_VIS:
+          url += "Photos";
+          break;
+        default: break;
+      }
+      return url;
+    }
+
   @SimpleEvent(description = "iSENSE Upload Data Set Succeeded")
     public void UploadDataSetSucceeded(int DataSetID) {
       EventDispatcher.dispatchEvent(this, "UploadDataSetSucceeded", DataSetID);
@@ -504,55 +538,4 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   
-  //vis type constants
-  @SimpleProperty(description = "VisType for map", category = PropertyCategory.BEHAVIOR)
-    public int MAP_VIS() {
-      return MAP_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for the timeline", category = PropertyCategory.BEHAVIOR)
-    public int TIMELINE_VIS() {
-      return TIMELINE_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for the scatter plot", category = PropertyCategory.BEHAVIOR)
-    public int SCATTER_VIS() {
-      return SCATTER_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for bar graph", category = PropertyCategory.BEHAVIOR)
-    public int BAR_VIS() {
-      return BAR_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for the histogram", category = PropertyCategory.BEHAVIOR)
-    public int HISTOGRAM_VIS() {
-      return HISTOGRAM_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for the box", category = PropertyCategory.BEHAVIOR)
-    public int BOX_VIS() {
-      return BOX_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for the pie chart", category = PropertyCategory.BEHAVIOR)
-    public int PIE_VIS() {
-      return PIE_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for a table", category = PropertyCategory.BEHAVIOR)
-    public int TABLE_VIS() {
-      return TABLE_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for a summary", category = PropertyCategory.BEHAVIOR)
-    public int SUMMARY_VIS() {
-      return SUMMARY_VIS;
-    }
-
-  @SimpleProperty(description = "VisType for photos", category = PropertyCategory.BEHAVIOR)
-    public int PHOTOS_VIS() {
-      return PHOTOS_VIS;
-    }
-
 }
