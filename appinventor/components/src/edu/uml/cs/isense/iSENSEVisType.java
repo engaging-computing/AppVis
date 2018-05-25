@@ -24,16 +24,16 @@ import com.google.appinventor.components.annotations.PropertyCategory;
 
 public final class iSENSEVisType extends AndroidNonvisibleComponent implements Component {
 
-  public static final int MAP_VIS = 0;
-  public static final int TIMELINE_VIS = 1;
-  public static final int SCATTER_VIS = 2;
-  public static final int BAR_VIS = 3;
-  public static final int HISTOGRAM_VIS = 4;
-  public static final int BOX_VIS = 5;
-  public static final int PIE_VIS = 6;
-  public static final int TABLE_VIS = 7;
-  public static final int SUMMARY_VIS = 8;
-  public static final int PHOTOS_VIS = 9;
+  protected static final int MAP_VIS = 0;
+  protected static final int TIMELINE_VIS = 1;
+  protected static final int SCATTER_VIS = 2;
+  protected static final int BAR_VIS = 3;
+  protected static final int HISTOGRAM_VIS = 4;
+  protected static final int BOX_VIS = 5;
+  protected static final int PIE_VIS = 6;
+  protected static final int TABLE_VIS = 7;
+  protected static final int SUMMARY_VIS = 8;
+  protected static final int PHOTOS_VIS = 9;
 
   public iSENSEVisType(ComponentContainer container) {
     super(container.$form());
