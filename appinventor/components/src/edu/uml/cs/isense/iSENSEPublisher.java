@@ -62,15 +62,15 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private static final int QUEUEDEPTH = 30;
 
   private static final int MAP_VIS = 0;
-  private static final int TIMELINE_VIS = 0;
-  private static final int SCATTER_VIS = 0;
-  private static final int BAR_VIS = 0;
-  private static final int HISTOGRAM_VIS = 0;
-  private static final int BOX_VIS = 0;
-  private static final int PIE_VIS = 0;
-  private static final int TABLE_VIS = 0;
-  private static final int SUMMARY_VIS = 0;
-  private static final int PHOTOS_VIS = 0;
+  private static final int TIMELINE_VIS = 1;
+  private static final int SCATTER_VIS = 2;
+  private static final int BAR_VIS = 3;
+  private static final int HISTOGRAM_VIS = 4;
+  private static final int BOX_VIS = 5;
+  private static final int PIE_VIS = 6;
+  private static final int TABLE_VIS = 7;
+  private static final int SUMMARY_VIS = 8;
+  private static final int PHOTOS_VIS = 9;
 
   private int ProjectID;
   private String ContributorKey;
@@ -460,43 +460,43 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int MAP_VIS() {
         return MAP_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int TIMELINE_VIS() {
         return TIMELINE_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int SCATTER_VIS() {
         return SCATTER_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int BAR_VIS() {
         return BAR_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int HISTOGRAM_VIS() {
         return HISTOGRAM_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int BOX_VIS() {
         return BOX_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int PIE_VIS() {
         return PIE_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int TABLE_VIS() {
         return TABLE_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int SUMMARY_VIS() {
         return SUMMARY_VIS;
       }
-    @SimpleProperty(description = "VisType for ", category = PropertyType.BEHAVIOR)
+    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
       public int PHOTOS_VIS() {
         return PHOTOS_VIS;
       }
