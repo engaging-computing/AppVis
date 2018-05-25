@@ -429,7 +429,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format with an overloaded vistype")
-    public String GetVisURL(int VisType) {
+    public String GetCustomVisURL(int VisType) {
       String url;
       if (UseDev) {
         url = DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
@@ -484,7 +484,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Get visualization url with controls for this project
   @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
-    public String GetVisWithControlsURL(int VisType) {
+    public String GetCustomVisWithControlsURL(int VisType) {
       String url;
       if (UseDev) {
         url = DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=";
