@@ -439,6 +439,50 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
     }
 
+  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format with an overloaded vistype")
+    public String GetVisURL(int VisType) {
+      String url;
+      if (UseDev) {
+        url = DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
+      } else {
+        url = LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
+      }
+      switch(VisType){
+        case MAP_VIS:
+          url+= "Map";
+          break;
+        case TIMELINE_VIS:
+          url+= "Timeline";
+          break;
+        case SCATTER_VIS:
+          url+= "Scatter";
+          break;
+        case BAR_VIS:
+          url+= "Bar";
+          break;
+        case HISTOGRAM_VIS:
+          url+= "Histogram";
+          break;
+        case BOX_VIS:
+          url+= "Box";
+          break;
+        case PIE_VIS:
+          url+= "Pie";
+          break;
+        case TABLE_VIS:
+          url+= "Table";
+          break;
+        case SUMMARY_VIS:
+          url+= "Summary";
+          break;
+        case PHOTOS_VIS:
+          url+= "Photos";
+          break;
+        default: break;
+      }
+      return url;
+    }
+
   // Get visualization url with controls for this project
   @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
     public String GetVisWithControlsURL() {
@@ -460,46 +504,55 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int MAP_VIS() {
-        return MAP_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int TIMELINE_VIS() {
-        return TIMELINE_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int SCATTER_VIS() {
-        return SCATTER_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int BAR_VIS() {
-        return BAR_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int HISTOGRAM_VIS() {
-        return HISTOGRAM_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int BOX_VIS() {
-        return BOX_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int PIE_VIS() {
-        return PIE_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int TABLE_VIS() {
-        return TABLE_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int SUMMARY_VIS() {
-        return SUMMARY_VIS;
-      }
-    @SimpleProperty(description = "VisType for ", category = PropertyCategory.BEHAVIOR)
-      public int PHOTOS_VIS() {
-        return PHOTOS_VIS;
-      }
+  //vis type constants
+  @SimpleProperty(description = "VisType for map", category = PropertyCategory.BEHAVIOR)
+    public int MAP_VIS() {
+      return MAP_VIS;
+    }
 
+  @SimpleProperty(description = "VisType for the timeline", category = PropertyCategory.BEHAVIOR)
+    public int TIMELINE_VIS() {
+      return TIMELINE_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the scatter plot", category = PropertyCategory.BEHAVIOR)
+    public int SCATTER_VIS() {
+      return SCATTER_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for bar graph", category = PropertyCategory.BEHAVIOR)
+    public int BAR_VIS() {
+      return BAR_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the histogram", category = PropertyCategory.BEHAVIOR)
+    public int HISTOGRAM_VIS() {
+      return HISTOGRAM_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the box", category = PropertyCategory.BEHAVIOR)
+    public int BOX_VIS() {
+      return BOX_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the pie chart", category = PropertyCategory.BEHAVIOR)
+    public int PIE_VIS() {
+      return PIE_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for a table", category = PropertyCategory.BEHAVIOR)
+    public int TABLE_VIS() {
+      return TABLE_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for a summary", category = PropertyCategory.BEHAVIOR)
+    public int SUMMARY_VIS() {
+      return SUMMARY_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for photos", category = PropertyCategory.BEHAVIOR)
+    public int PHOTOS_VIS() {
+      return PHOTOS_VIS;
+    }
 
 }
