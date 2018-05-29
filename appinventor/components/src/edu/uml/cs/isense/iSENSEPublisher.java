@@ -50,7 +50,7 @@ import edu.uml.cs.isense.objects.RProject;
     category = ComponentCategory.EXTENSION,
     nonVisible = true,
     //iconName = "images/extension.png")
-    iconName = "https://raw.githubusercontent.com/mck529/appinventor-sources/extension/appinventor/appengine/src/com/google/appinventor/images/isense.png")
+    iconName = "https://raw.githubusercontent.com/codom/appinventor-sources/master/appinventor/appengine/src/com/google/appinventor/images/isense.png")
 @SimpleObject(external = true)
 @UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
 @UsesLibraries(libraries = "isense.jar")
@@ -61,6 +61,17 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private static final String CONTRIBUTORNAME = "AppVis"; 
   private static final int QUEUEDEPTH = 30;
 
+  protected static final int MAP_VIS = 0;
+  protected static final int TIMELINE_VIS = 1;
+  protected static final int SCATTER_VIS = 2;
+  protected static final int BAR_VIS = 3;
+  protected static final int HISTOGRAM_VIS = 4;
+  protected static final int BOX_VIS = 5;
+  protected static final int PIE_VIS = 6;
+  protected static final int TABLE_VIS = 7;
+  protected static final int SUMMARY_VIS = 8;
+  protected static final int PHOTOS_VIS = 9;
+
   private int ProjectID;
   private String ContributorKey;
   private String VisType;
@@ -69,6 +80,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private boolean UseDev;
   private LinkedList<DataObject> pending; 
   private RProject project;
+  private ArrayList <RProjectField> fields;
   private final API api;
   private static Activity activity; 
   private int numPending;
@@ -85,12 +97,63 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       api.useDev(UseDev);
     }
     project = api.getProject(ProjectID);
+    fields = api.getProjectFields(ProjectID);
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
     numPending = 0;
   }
 
   // Block Properties
+  //vis type constants
+  @SimpleProperty(description = "VisType for map", category = PropertyCategory.BEHAVIOR)
+    public int Map() {
+      return MAP_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the timeline", category = PropertyCategory.BEHAVIOR)
+    public int Timeline() {
+      return TIMELINE_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the scatter plot", category = PropertyCategory.BEHAVIOR)
+    public int Scatter() {
+      return SCATTER_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for bar graph", category = PropertyCategory.BEHAVIOR)
+    public int Bar() {
+      return BAR_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the histogram", category = PropertyCategory.BEHAVIOR)
+    public int Histogram() {
+      return HISTOGRAM_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the box", category = PropertyCategory.BEHAVIOR)
+    public int Box() {
+      return BOX_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for the pie chart", category = PropertyCategory.BEHAVIOR)
+    public int Pie() {
+      return PIE_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for a table", category = PropertyCategory.BEHAVIOR)
+    public int Table() {
+      return TABLE_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for a summary", category = PropertyCategory.BEHAVIOR)
+    public int Summary() {
+      return SUMMARY_VIS;
+    }
+
+  @SimpleProperty(description = "VisType for photos", category = PropertyCategory.BEHAVIOR)
+    public int Photos() {
+      return PHOTOS_VIS;
+    }
   // ProjectID
   @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public int ProjectID() {
@@ -101,8 +164,18 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
+      //TODO: Thread this 
       this.project = api.getProject(ProjectID);
     }
+
+    /*
+  //ISense get fields list
+  @SimpleFunction(description = "Get the fields in the projects as a list")
+    public String GetFieldsList() {
+      String retFields = "";
+      return retFields;
+    }
+    */
   
   //ISense project name
   @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
@@ -146,7 +219,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       return project.featured;
     }
  
-
   // Contributor Key
   @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
     public String ContributorKey() {
@@ -428,6 +500,50 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
     }
 
+  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format with an overloaded vistype")
+    public String GetCustomVisURL(int VisType) {
+      String url;
+      if (UseDev) {
+        url = DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
+      } else {
+        url = LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
+      }
+      switch(VisType){
+        case MAP_VIS:
+          url += "Map";
+          break;
+        case TIMELINE_VIS:
+          url += "Timeline";
+          break;
+        case SCATTER_VIS:
+          url += "Scatter";
+          break;
+        case BAR_VIS:
+          url += "Bar";
+          break;
+        case HISTOGRAM_VIS:
+          url += "Histogram";
+          break;
+        case BOX_VIS:
+          url += "Box";
+          break;
+        case PIE_VIS:
+          url += "Pie";
+          break;
+        case TABLE_VIS:
+          url += "Table";
+          break;
+        case SUMMARY_VIS:
+          url += "Summary";
+          break;
+        case PHOTOS_VIS:
+          url += "Photos";
+          break;
+        default: break;
+      }
+      return url;
+    }
+
   // Get visualization url with controls for this project
   @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
     public String GetVisWithControlsURL() {
@@ -436,6 +552,51 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       } else {
         return LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + VisType;
       } 
+    }
+
+  // Get visualization url with controls for this project
+  @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
+    public String GetCustomVisWithControlsURL(int VisType) {
+      String url;
+      if (UseDev) {
+        url = DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=";
+      } else {
+        url = LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=";
+      } 
+      switch(VisType){
+        case MAP_VIS:
+          url += "Map";
+          break;
+        case TIMELINE_VIS:
+          url += "Timeline";
+          break;
+        case SCATTER_VIS:
+          url += "Scatter";
+          break;
+        case BAR_VIS:
+          url += "Bar";
+          break;
+        case HISTOGRAM_VIS:
+          url += "Histogram";
+          break;
+        case BOX_VIS:
+          url += "Box";
+          break;
+        case PIE_VIS:
+          url += "Pie";
+          break;
+        case TABLE_VIS:
+          url += "Table";
+          break;
+        case SUMMARY_VIS:
+          url += "Summary";
+          break;
+        case PHOTOS_VIS:
+          url += "Photos";
+          break;
+        default: break;
+      }
+      return url;
     }
 
   @SimpleEvent(description = "iSENSE Upload Data Set Succeeded")
@@ -448,4 +609,5 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       EventDispatcher.dispatchEvent(this, "UploadDataSetFailed");
     }
 
+  
 }
