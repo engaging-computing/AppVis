@@ -508,34 +508,34 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         url = LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
       }
       switch(VisType){
-        case iSENSEVisType.MAP_VIS:
+        case MAP_VIS:
           url += "Map";
           break;
-        case iSENSEVisType.TIMELINE_VIS:
+        case TIMELINE_VIS:
           url += "Timeline";
           break;
-        case iSENSEVisType.SCATTER_VIS:
+        case SCATTER_VIS:
           url += "Scatter";
           break;
-        case iSENSEVisType.BAR_VIS:
+        case BAR_VIS:
           url += "Bar";
           break;
-        case iSENSEVisType.HISTOGRAM_VIS:
+        case HISTOGRAM_VIS:
           url += "Histogram";
           break;
-        case iSENSEVisType.BOX_VIS:
+        case BOX_VIS:
           url += "Box";
           break;
-        case iSENSEVisType.PIE_VIS:
+        case PIE_VIS:
           url += "Pie";
           break;
-        case iSENSEVisType.TABLE_VIS:
+        case TABLE_VIS:
           url += "Table";
           break;
-        case iSENSEVisType.SUMMARY_VIS:
+        case SUMMARY_VIS:
           url += "Summary";
           break;
-        case iSENSEVisType.PHOTOS_VIS:
+        case PHOTOS_VIS:
           url += "Photos";
           break;
         default: break;
@@ -563,34 +563,34 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         url = LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=";
       } 
       switch(VisType){
-        case iSENSEVisType.MAP_VIS:
+        case MAP_VIS:
           url += "Map";
           break;
-        case iSENSEVisType.TIMELINE_VIS:
+        case TIMELINE_VIS:
           url += "Timeline";
           break;
-        case iSENSEVisType.SCATTER_VIS:
+        case SCATTER_VIS:
           url += "Scatter";
           break;
-        case iSENSEVisType.BAR_VIS:
+        case BAR_VIS:
           url += "Bar";
           break;
-        case iSENSEVisType.HISTOGRAM_VIS:
+        case HISTOGRAM_VIS:
           url += "Histogram";
           break;
-        case iSENSEVisType.BOX_VIS:
+        case BOX_VIS:
           url += "Box";
           break;
-        case iSENSEVisType.PIE_VIS:
+        case PIE_VIS:
           url += "Pie";
           break;
-        case iSENSEVisType.TABLE_VIS:
+        case TABLE_VIS:
           url += "Table";
           break;
-        case iSENSEVisType.SUMMARY_VIS:
+        case SUMMARY_VIS:
           url += "Summary";
           break;
-        case iSENSEVisType.PHOTOS_VIS:
+        case PHOTOS_VIS:
           url += "Photos";
           break;
         default: break;
