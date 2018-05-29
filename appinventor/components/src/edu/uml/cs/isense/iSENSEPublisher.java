@@ -80,6 +80,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private boolean UseDev;
   private LinkedList<DataObject> pending; 
   private RProject project;
+  private ArrayList <RProjectField> fields;
   private final API api;
   private static Activity activity; 
   private int numPending;
@@ -96,6 +97,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       api.useDev(UseDev);
     }
     project = api.getProject(ProjectID);
+    fields = api.getProjectFields(ProjectID);
     pending = new LinkedList<DataObject>(); 
     activity = container.$context(); 
     numPending = 0;
@@ -162,8 +164,18 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
+      //TODO: Thread this 
       this.project = api.getProject(ProjectID);
     }
+
+    /*
+  //ISense get fields list
+  @SimpleFunction(description = "Get the fields in the projects as a list")
+    public String GetFieldsList() {
+      String retFields = "";
+      return retFields;
+    }
+    */
   
   //ISense project name
   @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
@@ -244,18 +256,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       pending.add(dob);
       numPending++;  
       new UploadTask().execute(); 
-    }
-  
-    //ISense get fields list
-  @SimpleFunction(description = "Get the fields in the projects as a list")
-    public YailList GetFieldsList() {
-      //TODO: Thread this bad boy
-      YailList myList = new YailList();
-      ArrayList <RProjectField> retList = api.getProjectFields(this.ProjectID);
-      for(RProjectField j : retList) {
-        myList.add(j.name);
-      }
-      return myList;
     }
 
   // Upload Dataset With Photo
