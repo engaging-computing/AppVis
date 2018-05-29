@@ -3,7 +3,6 @@ package edu.uml.cs.isense;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.LinkedList; 
 import java.io.File; 
 import java.net.URL; 
@@ -249,9 +248,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   
     //ISense get fields list
   @SimpleFunction(description = "Get the fields in the projects as a list")
-    public Collection <String> GetFieldsList() {
+    public YailList GetFieldsList() {
       //TODO: Thread this bad boy
-      Collection <String> myList = new YailList();
+      YailList myList = new YailList();
       ArrayList <RProjectField> retList = api.getProjectFields(this.ProjectID);
       for(RProjectField j : retList) {
         myList.add(j.name);
