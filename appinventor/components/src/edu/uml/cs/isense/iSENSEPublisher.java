@@ -164,7 +164,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
-      //TODO: Thread this 
       this.project = api.getProject(ProjectID);
     }
 
@@ -214,7 +213,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
  
   //ISense project isFeatured?
-  @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, flase if normal", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, false if normal", category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsFeatured() {
       return project.featured;
     }
