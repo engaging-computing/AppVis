@@ -3,6 +3,7 @@ package edu.uml.cs.isense;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.LinkedList; 
 import java.io.File; 
 import java.net.URL; 
@@ -207,17 +208,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       return project.featured;
     }
  
-  //ISense get fields list
-  @SimpleProperty(description = "Get the fields in the projects as a list", category = PropertyCategory.BEHAVIOR)
-    public YailList GetFieldsList() {
-      YailList myList = new YailList();
-      ArrayList <RProjectField> retList = api.getProjectFields(this.ProjectID);
-      for(RProjectField j : retList) {
-        myList.add(j.name);
-      }
-      return myList;
-    }
-
   // Contributor Key
   @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
     public String ContributorKey() {
@@ -255,6 +245,18 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       pending.add(dob);
       numPending++;  
       new UploadTask().execute(); 
+    }
+  
+    //ISense get fields list
+  @SimpleFunction(description = "Get the fields in the projects as a list")
+    public Collection <String> GetFieldsList() {
+      //TODO: Thread this bad boy
+      Collection <String> myList = new YailList();
+      ArrayList <RProjectField> retList = api.getProjectFields(this.ProjectID);
+      for(RProjectField j : retList) {
+        myList.add(j.name);
+      }
+      return myList;
     }
 
   // Upload Dataset With Photo
