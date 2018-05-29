@@ -207,6 +207,16 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       return project.featured;
     }
  
+  //ISense get fields list
+  @SimpleProperty(description = "Get the fields in the projects as a list", category = PropertyCategory.BEHAVIOR)
+    public YailList GetFieldsList() {
+      YailList myList = new YailList();
+      ArrayList <RProjectField> retList = api.getProjectFields(this.ProjectID);
+      for(RProjectField j : retList) {
+        myList.add(j.name);
+      }
+      return myList;
+    }
 
   // Contributor Key
   @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
