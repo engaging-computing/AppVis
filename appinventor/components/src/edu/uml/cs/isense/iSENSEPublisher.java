@@ -171,7 +171,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         return;
       }
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
       }
     }
 
@@ -189,7 +189,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
     public String ProjectName() {
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
         return "DNE";
       }
       return project.name;
@@ -199,7 +199,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleProperty(description = "iSENSE Project Like Count", category = PropertyCategory.BEHAVIOR)
     public int ProjectLikeCount() {
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
         return 0;
       }
       return project.like_count;
@@ -209,7 +209,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
     public String ProjectAuthor() {
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
         return "DNE";
       }
       return project.owner_name;
@@ -219,7 +219,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleProperty(description = "iSENSE Project Creation Date", category = PropertyCategory.BEHAVIOR)
     public String ProjectDateCreated() {
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
         return "DNE";
       }
       return project.timecreated;
@@ -229,7 +229,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleProperty(description = "iSENSE Project Account URL", category = PropertyCategory.BEHAVIOR)
     public String ProjectOwnerURL() {
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
         return "DNE";
       }
       return project.owner_url;
@@ -239,7 +239,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleProperty(description = "iSENSE Project isHidden. Returns true if hidden, flase if visible", category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsHidden() {
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
         return false;
       }
       return project.hidden;
@@ -249,7 +249,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, false if normal", category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsFeatured() {
       if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get projectt information!");
+        Log.e("iSENSE", "Couldn't get project information!");
         return false;
       }
       return project.featured;
