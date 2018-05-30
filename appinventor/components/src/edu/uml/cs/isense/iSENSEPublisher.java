@@ -190,7 +190,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public String ProjectName() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get projectt information!");
-        return null;
+        return "DNE";
       }
       return project.name;
     }
@@ -210,7 +210,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public String ProjectAuthor() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get projectt information!");
-        return null;
+        return "DNE";
       }
       return project.owner_name;
     }
@@ -220,7 +220,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public String ProjectDateCreated() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get projectt information!");
-        return null;
+        return "DNE";
       }
       return project.timecreated;
     }
@@ -230,7 +230,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public String ProjectOwnerURL() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get projectt information!");
-        return null;
+        return "DNE";
       }
       return project.owner_url;
     }
