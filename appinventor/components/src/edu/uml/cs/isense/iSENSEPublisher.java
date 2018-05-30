@@ -74,7 +74,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   private int ProjectID;
   private String ContributorKey;
-  private String VisType;
   private String LiveURL = "http://isenseproject.org";
   private String DevURL = "http://dev.isenseproject.org";
   private boolean UseDev;
@@ -91,7 +90,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     api = API.getInstance();
     ProjectID(-1); 
     ContributorKey(""); 
-    VisType("");
     UseDev = false;
     if(UseDev) {
       api.useDev(UseDev);
@@ -228,18 +226,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
     public void ContributorKey(String ContributorKey) {
       this.ContributorKey = ContributorKey;
-    }
-
-    // Vis Type
-  @SimpleProperty(description = "Visualization Type", category = PropertyCategory.BEHAVIOR)
-    public String VisType() {
-      return VisType;
-    }
-
-  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
-    @SimpleProperty(description = "Visualization Type", category = PropertyCategory.BEHAVIOR)
-    public void VisType(String VisType) {
-      this.VisType = VisType;
     }
 
   // Block Functions
@@ -493,9 +479,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format.")
     public String GetVisURL() {
       if (UseDev) {
-        return DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + VisType; 
+        return DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis="; 
       } else {
-        return LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=" + VisType;
+        return LiveURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis=";
       }
     }
 
@@ -547,9 +533,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleFunction(description = "Gets URL for project visualization with controls onscreen.")
     public String GetVisWithControlsURL() {
       if (UseDev) {
-        return DevURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + VisType;
+        return DevURL + "/projects/" + ProjectID + "/data_sets?embed=true";
       } else {
-        return LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true&vis=" + VisType;
+        return LiveURL + "/projects/" + ProjectID + "/data_sets?embed=true";
       } 
     }
 
