@@ -170,6 +170,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.e("iSENSE", "Invalid URL! Check Project ID."); 
         return;
       }
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+      }
     }
 
   //ISense get fields list
@@ -185,42 +188,70 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   //ISense project name
   @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
     public String ProjectName() {
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+        return null;
+      }
       return project.name;
     }
   
   //ISense like count
   @SimpleProperty(description = "iSENSE Project Like Count", category = PropertyCategory.BEHAVIOR)
     public int ProjectLikeCount() {
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+        return 0;
+      }
       return project.like_count;
     }
 
   //ISense project author
   @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
     public String ProjectAuthor() {
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+        return null;
+      }
       return project.owner_name;
     }
 
   //ISense project creation date
   @SimpleProperty(description = "iSENSE Project Creation Date", category = PropertyCategory.BEHAVIOR)
     public String ProjectDateCreated() {
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+        return null;
+      }
       return project.timecreated;
     }
  
   //ISense project owner url
   @SimpleProperty(description = "iSENSE Project Account URL", category = PropertyCategory.BEHAVIOR)
     public String ProjectOwnerURL() {
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+        return null;
+      }
       return project.owner_url;
     }
   
   //ISense project isHidden?
   @SimpleProperty(description = "iSENSE Project isHidden. Returns true if hidden, flase if visible", category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsHidden() {
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+        return false;
+      }
       return project.hidden;
     }
  
   //ISense project isFeatured?
   @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, false if normal", category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsFeatured() {
+      if(this.project == null || this.fields == null) {
+        Log.e("iSENSE", "Couldn't get projectt information!");
+        return false;
+      }
       return project.featured;
     }
  
