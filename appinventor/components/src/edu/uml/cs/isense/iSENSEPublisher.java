@@ -162,17 +162,25 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
-      this.project = api.getProject(ProjectID);
+      //TODO: Should these be threaded? Different function?
+      try{
+        this.project = api.getProject(ProjectID);
+        this.fields = api.getProjectFields(ProjectID);
+      } catch (Exception e) {
+        Log.e("iSENSE", "Invalid URL! Check Project ID."); 
+        return;
+      }
     }
 
-    /*
   //ISense get fields list
   @SimpleFunction(description = "Get the fields in the projects as a list")
     public String GetFieldsList() {
       String retFields = "";
+      for (RProjectField j : fields) {
+        retFields += j.name + ",";
+      }
       return retFields;
     }
-    */
   
   //ISense project name
   @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
@@ -593,6 +601,4 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public void UploadDataSetFailed() {
       EventDispatcher.dispatchEvent(this, "UploadDataSetFailed");
     }
-
-  
 }
