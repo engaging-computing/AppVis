@@ -14,7 +14,9 @@ import org.json.JSONObject;
 import android.app.Activity; 
 import android.util.Log;
 import android.os.Handler;
-import android.content.Context; 
+import android.provider.MediaStore;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.ConnectivityManager; 
 import android.net.NetworkInfo; 
 import android.os.AsyncTask; 
@@ -299,12 +301,21 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI!"); 
-          UploadDataSetFailed("Invalid photo URL!"); 
+          UploadDataSetFailed("Invalid photo URL!" + e.getMessage()); 
           return;
         }
       } else if (pathtokens[0].equals("content:")) {
         try {
-          path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
+          Cursor cursor;
+          try {
+            String[] proj = { MediaStore.Images.Media.DATA };
+            cursor = getContentResolver().query(Photo, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            path = cursor.getString(column_index);
+          } finally {
+            cursor.close();
+          }
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI " + path); 
           UploadDataSetFailed("Invalid photo URL! " + e.getMessage()); 
