@@ -302,6 +302,14 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           UploadDataSetFailed(); 
           return;
         }
+      } else if (pathtokens[0].equals("content:")) {
+        try {
+          path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
+        } catch (Exception e) {
+          Log.e("iSENSE", "Malformed URL or URI " + path); 
+          UploadDataSetFailed(); 
+          return;
+        }
       } else { // Assets photo
         path = "/sdcard/AppInventor/assets/" + Photo; 
       }
