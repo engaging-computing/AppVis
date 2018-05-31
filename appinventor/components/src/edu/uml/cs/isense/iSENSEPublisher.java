@@ -309,7 +309,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           Cursor cursor;
           try {
             String[] proj = { MediaStore.Images.Media.DATA };
-            cursor = getContentResolver().query(Photo, proj, null, null, null);
+            cursor = activity.getContentResolver().query(new File(Photo).toURI(), proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             path = cursor.getString(column_index);
