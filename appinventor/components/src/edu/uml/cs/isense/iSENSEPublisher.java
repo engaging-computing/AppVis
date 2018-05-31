@@ -299,7 +299,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI!"); 
-          UploadDataSetFailed("Invalid URL!"); 
+          UploadDataSetFailed("Invalid photo URL!"); 
           return;
         }
       } else if (pathtokens[0].equals("content:")) {
@@ -307,7 +307,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI " + path); 
-          UploadDataSetFailed("Invalid URL!"); 
+          UploadDataSetFailed("Invalid photo URL! " + e.getMessage()); 
           return;
         }
       } else { // Assets photo
