@@ -274,7 +274,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data);
       if (pending.size() >= QUEUEDEPTH) {
-        UploadDataSetFailed();
+        UploadDataSetFailed("Upload queue full!");
         return;
       }
       pending.add(dob);
@@ -287,7 +287,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public void UploadDataSetWithPhoto(final String DataSetName, final YailList Fields, final YailList Data, final String Photo) {
 
       if (pending.size() >= QUEUEDEPTH) {
-        UploadDataSetFailed();
+        UploadDataSetFailed("Upload queue full!");
         return;
       }
       // Validate photo
@@ -299,7 +299,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI!"); 
-          UploadDataSetFailed(); 
+          UploadDataSetFailed("Invalid URL!"); 
           return;
         }
       } else if (pathtokens[0].equals("content:")) {
@@ -307,7 +307,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI " + path); 
-          UploadDataSetFailed(); 
+          UploadDataSetFailed("Invalid URL!"); 
           return;
         }
       } else { // Assets photo
@@ -318,7 +318,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       File pic = new File(path); 
       if (!pic.exists()) {
         Log.e("iSENSE", "picture does not exist!"); 
-        UploadDataSetFailed(); 
+        UploadDataSetFailed("Picture doesn't exist!"); 
         return;
       }
 
@@ -335,7 +335,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetID, Fields, Data);
       if (pending.size() >= QUEUEDEPTH) {
-        UploadDataSetFailed();
+        UploadDataSetFailed("Upload queue full!");
         return;
       }
       pending.add(dob);
@@ -435,7 +435,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
               String sdata = dob.data.get(i + 1).toString();
               jData.put("" + projectFields.get(j).field_id, new JSONArray().put(sdata));
             } catch (JSONException e) {
-              UploadDataSetFailed();
+              UploadDataSetFailed("Error uploading to iSense: " + e.getMessage());
               e.printStackTrace();
               return -1;
             }
@@ -494,7 +494,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     protected void onPostExecute(Integer result) {
       numPending--;
       if (result == -1) {
-        UploadDataSetFailed(); 
+        UploadDataSetFailed("iSENSE upload failed!"); 
       } else {
         UploadDataSetSucceeded(result); 
       }
@@ -637,7 +637,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   @SimpleEvent(description = "iSENSE Upload Data Set Failed")
-    public void UploadDataSetFailed() {
-      EventDispatcher.dispatchEvent(this, "UploadDataSetFailed");
+    public void UploadDataSetFailed(String message) {
+      EventDispatcher.dispatchEvent(this, "UploadDataSetFailed", message);
     }
 }
