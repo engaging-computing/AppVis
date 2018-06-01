@@ -306,9 +306,13 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         }
       } else if (pathtokens[0].equals("content:")) {
         try {
-          Cursor cursor = null;
+          Uri picUri = Uri.fromParts(pathtokens[0], pathtokens[1], pathtokens[pathtokens.length]);
           String[] proj = { MediaStore.Images.Media.DATA };
-          cursor = activity.getContentResolver().query(Uri.fromFile(new File(Photo)), proj, null, null, null);
+          Cursor cursor = activity.getContentResolver().query(picUri, proj, null, null, null);
+          if (cursor == null) {
+            UploadDataSetFailed("getContentResolver().query() returns null with Uri = " + picUri);
+            return;
+          }
           int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
           cursor.moveToFirst();
           path = cursor.getString(column_index);
