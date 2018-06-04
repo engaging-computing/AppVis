@@ -306,16 +306,15 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         }
       } else if (pathtokens[0].equals("content:")) {
         try {
-          Uri picUri = Uri.fromParts(pathtokens[0], pathtokens[1], pathtokens[pathtokens.length]);
-          String[] proj = { MediaStore.Images.Media.DATA };
+          Uri picUri = Uri.parse(Photo);
+          String[] proj = { MediaStore.Images.ImageColumns.DATA };
           Cursor cursor = activity.getContentResolver().query(picUri, proj, null, null, null);
           if (cursor == null) {
             UploadDataSetFailed("getContentResolver().query() returns null with Uri = " + picUri);
             return;
           }
-          int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
           cursor.moveToFirst();
-          path = cursor.getString(column_index);
+          path = cursor.getString(0);
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI " + path); 
           UploadDataSetFailed("Invalid photo URL! " + e.getMessage()); 
