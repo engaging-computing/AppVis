@@ -169,7 +169,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         this.project = api.getProject(ProjectID);
         this.fields = api.getProjectFields(ProjectID);
       } catch (Exception e) {
-        Log.e("iSENSE", "Invalid URL! Check Project ID."); 
+        Log.e("iSENSE", "Invalid URL! Check Project ID.");
         return;
       }
       if(this.project == null || this.fields == null) {
@@ -186,7 +186,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
       return retFields;
     }
-  
+
   //ISense project name
   @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
     public String ProjectName() {
@@ -196,7 +196,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
       return project.name;
     }
-  
+
   //ISense like count
   @SimpleProperty(description = "iSENSE Project Like Count", category = PropertyCategory.BEHAVIOR)
     public int ProjectLikeCount() {
@@ -454,6 +454,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
 
       int dataSetId = -1;
+      int mediaID = -1;
       // are we uploading a new data set?
       if (!dob.name.equals("")) {
         // login with contributor key
@@ -478,11 +479,10 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "JSON Upload: " + jData.toString()); 
         Log.i("iSENSE", "Dataset ID: " + dataSetId); 
         if (dataSetId == -1) {
-          Log.e("iSENSE", "Append failed! Check your contributor key and project ID."); 
-          return -1; 
+          Log.e("iSENSE", "Append failed! Check your contributor key and project ID.");
+          return -1;
         }
       }
-    
 
       // do we have a photo to upload?
       if (!dob.path.equals("")) {
@@ -490,17 +490,15 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         pic.setReadable(true);
         Log.i("iSENSE", "Trying to upload: " + dob.path);
         uInfo = api.uploadMedia(dataSetId, pic, API.TargetType.DATA_SET, ContributorKey, CONTRIBUTORNAME);
-        //dataSetId = uInfo.dataSetId;
-        int mediaID = uInfo.mediaId;
+        dataSetId = uInfo.mediaId;
         Log.i("iSENSE", "MediaID: " + mediaID);
-        if (mediaID == -1) {
+        if (dataSetId == -1) {
           Log.e("iSENSE", "Media upload failed. Is it a valid picture?");
-          return mediaID;
-          //return dataSetId;
-        } 
+          return -1;
+        }
       }
-      return dataSetId; 
-    } 
+      return dataSetId;
+    }
 
     // After background thread execution, UI handler runs this 
     protected void onPostExecute(Integer result) {
