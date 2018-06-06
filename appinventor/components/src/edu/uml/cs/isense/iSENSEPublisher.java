@@ -298,7 +298,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       // If camera photo 
       if (pathtokens[0].equals("file:")) {
         try {
-          path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
+          //path = new File(new URL(Photo).toURI()).getAbsolutePath(); 
+          path = Uri.parse(Photo).getPath();
         } catch (Exception e) {
           Log.e("iSENSE", "Malformed URL or URI!"); 
           UploadDataSetFailed("Invalid photo URL!" + e.getMessage()); 
