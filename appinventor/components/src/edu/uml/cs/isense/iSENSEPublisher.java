@@ -306,6 +306,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         }
       } else if (pathtokens[0].equals("content:")) {
         try {
+          //query the system for the absolute path of the Uri
           Uri picUri = Uri.parse(Photo);
           String[] proj = { MediaStore.Images.ImageColumns.DATA };
           Cursor cursor = activity.getContentResolver().query(picUri, proj, null, null, null);
@@ -328,7 +329,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       File pic = new File(path); 
       if (!pic.exists()) {
         Log.e("iSENSE", "picture does not exist!"); 
-        UploadDataSetFailed("Picture doesn't exist!"); 
+        UploadDataSetFailed("Picture with dir" + path + " doesn't exist!"); 
         return;
       }
 
@@ -496,6 +497,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           Log.e("iSENSE", "Media upload failed. Is it a valid picture?");
           return -1;
         }
+          
       }
       return dataSetId;
     }
@@ -651,3 +653,4 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       EventDispatcher.dispatchEvent(this, "UploadDataSetFailed", message);
     }
 }
+
