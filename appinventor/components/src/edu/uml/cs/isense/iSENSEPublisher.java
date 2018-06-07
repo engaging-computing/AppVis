@@ -341,7 +341,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
       // Create new "DataObject" and add it to the upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data, path); 
-      pending.add(dob); 
+      pending.add(dob);
       numPending++;
       new UploadTask().execute(); 
     }
@@ -514,6 +514,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         case FAILED_ABSOLUTELY :
           UploadDataSetFailed("Upload Failed!");
           break;
+        case FAILED_ALREADY_ON_SERVER :
+          Log.e("iSENSE", "Media upload failed: Picture already exists on server");
+          UploadDataSetFailed("Upload Failed, picture already exists on iSense");
         default :
           UploadDataSetSucceeded(result);
           break;
