@@ -510,6 +510,17 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     // After background thread execution, UI handler runs this 
     protected void onPostExecute(UploadInfo result) {
       numPending--;
+      if(result.success) {
+        UploadDataSetSucceeded(result.mediaId);
+      } else {
+        //TODO: Make these error messages kid friendly
+        //UploadDataSetFailed(result.errorMessage);
+        if(result.errorMessage.equals("[\"Duplicate media object detected\"]")) {
+          UploadDataSetFailed("Image already exists on server");
+        } else {
+          UploadDataSetFailed(result.errorMessage);
+        }
+      }
     }
   }
 
