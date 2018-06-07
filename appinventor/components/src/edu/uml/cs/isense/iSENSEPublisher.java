@@ -63,6 +63,11 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private static final String CONTRIBUTORNAME = "AppVis"; 
   private static final int QUEUEDEPTH = 30;
 
+  private static final int FAILED_ABSOLUTELY = -1;
+  private static final int FAILED_ALREADY_ON_SERVER = -2;
+  private static final int FAILED_ON_UPLOAD = -3;
+  private static final int FAILED_FILE_NOT_FOUND = -4;
+
   protected static final int MAP_VIS = 0;
   protected static final int TIMELINE_VIS = 1;
   protected static final int SCATTER_VIS = 2;
@@ -402,13 +407,13 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       // ensure that the lists are the same size 
       if (dob.fields.size() != dob.data.size()) {
         Log.e("iSENSE", "Input lists are not the same size!"); 
-        return -1; 
+        return FAILED_ABSOLUTELY; 
       } 
 
       // A simple throttle if too much data is being thrown at the upload queue 
       if (pending.size() > QUEUEDEPTH) {
         Log.e("iSENSE", "Too many items in upload queue!"); 
-        return -1;  
+        return FAILED_ABSOLUTELY;  
       }
 
       // Sleep while we don't have a wifi connection or a mobile connection
@@ -449,7 +454,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
             } catch (JSONException e) {
               UploadDataSetFailed("Error uploading to iSense: " + e.getMessage());
               e.printStackTrace();
-              return -1;
+              return FAILED_ABSOLUTELY;
             }
           }
         }
@@ -470,7 +475,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "Dataset ID: " + dataSetId); 
         if (dataSetId == -1) {
           Log.e("iSENSE", "Append failed! Check your contributor key and project ID."); 
-          return -1; 
+          return FAILED_ABSOLUTELY; 
         }
       }
 
@@ -482,7 +487,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "Dataset ID: " + dataSetId); 
         if (dataSetId == -1) {
           Log.e("iSENSE", "Append failed! Check your contributor key and project ID.");
-          return -1;
+          return FAILED_ABSOLUTELY;
         }
       }
 
@@ -496,20 +501,22 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "MediaID: " + mediaID);
         if (dataSetId == -1) {
           Log.e("iSENSE", "Media upload failed. Is it a valid picture?");
-          return -1;
+          return FAILED_ABSOLUTELY;
         }
-          
       }
       return dataSetId;
     }
 
     // After background thread execution, UI handler runs this 
-    protected void onPostExecute(Integer result) {
+    protected void onPostExecute(int result) {
       numPending--;
-      if (result == -1) {
-        UploadDataSetFailed("iSENSE upload failed!"); 
-      } else {
-        UploadDataSetSucceeded(result); 
+      switch (result) {
+        case FAILED_ABSOLUTELY :
+          UploadDataSetFailed("Upload Failed!");
+          break;
+        default :
+          UploadDataSetSucceeded(result);
+          break;
       }
     }
   }
