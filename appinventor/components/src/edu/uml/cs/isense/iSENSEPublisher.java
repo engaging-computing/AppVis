@@ -63,10 +63,10 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private static final String CONTRIBUTORNAME = "AppVis"; 
   private static final int QUEUEDEPTH = 30;
 
-  private static final int FAILED_ABSOLUTELY = -1;
-  private static final int FAILED_ALREADY_ON_SERVER = -2;
-  private static final int FAILED_ON_UPLOAD = -3;
-  private static final int FAILED_FILE_NOT_FOUND = -4;
+  private static final String FAILED_ABSOLUTELY = "Failure: ";
+  private static final String FAILED_ALREADY_ON_SERVER = "Warning: ";
+//  private static final String FAILED_ON_UPLOAD = "Failure: ";
+//  private static final String FAILED_FILE_NOT_FOUND = "Failure: ";
 
   protected static final int MAP_VIS = 0;
   protected static final int TIMELINE_VIS = 1;
@@ -398,22 +398,23 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   }
 
   // Private asynchronous task class that allows background uploads
-  private class UploadTask extends AsyncTask<Void, Void, Integer> {
+  private class UploadTask extends AsyncTask<Void, Void, UploadInfo> {
 
     // This is what actually runs in the background thread, so it's safe to block
-    protected Integer doInBackground(Void... v) {
+    protected UploadInfo doInBackground(Void... v) {
 
       DataObject dob = pending.remove(); 
+      UploadInfo uInfo = new UploadInfo(); 
       // ensure that the lists are the same size 
       if (dob.fields.size() != dob.data.size()) {
         Log.e("iSENSE", "Input lists are not the same size!"); 
-        return FAILED_ABSOLUTELY; 
+        return uInfo; 
       } 
 
       // A simple throttle if too much data is being thrown at the upload queue 
       if (pending.size() > QUEUEDEPTH) {
         Log.e("iSENSE", "Too many items in upload queue!"); 
-        return FAILED_ABSOLUTELY;  
+        return uInfo;  
       }
 
       // Sleep while we don't have a wifi connection or a mobile connection
@@ -440,7 +441,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       } 
 
       // Active internet connection detected; proceed with upload 
-      UploadInfo uInfo = new UploadInfo(); 
 
       // Get fields from project
       ArrayList<RProjectField> projectFields = api.getProjectFields(ProjectID);
@@ -454,7 +454,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
             } catch (JSONException e) {
               UploadDataSetFailed("Error uploading to iSense: " + e.getMessage());
               e.printStackTrace();
-              return FAILED_ABSOLUTELY;
+              return uInfo;
             }
           }
         }
@@ -475,7 +475,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "Dataset ID: " + dataSetId); 
         if (dataSetId == -1) {
           Log.e("iSENSE", "Append failed! Check your contributor key and project ID."); 
-          return FAILED_ABSOLUTELY; 
+          return uInfo; 
         }
       }
 
@@ -487,7 +487,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "Dataset ID: " + dataSetId); 
         if (dataSetId == -1) {
           Log.e("iSENSE", "Append failed! Check your contributor key and project ID.");
-          return FAILED_ABSOLUTELY;
+          return uInfo;
         }
       }
 
@@ -498,28 +498,18 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Log.i("iSENSE", "Trying to upload: " + dob.path);
         uInfo = api.uploadMedia(dataSetId, pic, API.TargetType.DATA_SET, ContributorKey, CONTRIBUTORNAME);
         dataSetId = uInfo.mediaId;
-        Log.i("iSENSE", "MediaID: " + mediaID);
+        Log.i("iSENSE", "MediaID: " + dataSetId);
         if (dataSetId == -1) {
           Log.e("iSENSE", "Media upload failed. Is it a valid picture?");
-          return FAILED_ABSOLUTELY;
+          return uInfo;
         }
       }
-      return dataSetId;
+      return uInfo;
     }
 
     // After background thread execution, UI handler runs this 
-    protected void onPostExecute(int result) {
+    protected void onPostExecute(UploadInfo result) {
       numPending--;
-      switch (result) {
-        case FAILED_ABSOLUTELY :
-          UploadDataSetFailed("Upload Failed!");
-          break;
-        case FAILED_ALREADY_ON_SERVER :
-          UploadDataSetFailed("Upload Failed, picture already exists on iSense");
-        default :
-          UploadDataSetSucceeded(result);
-          break;
-      }
     }
   }
 
