@@ -515,7 +515,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           UploadDataSetFailed("Upload Failed!");
           break;
         case FAILED_ALREADY_ON_SERVER :
-          Log.e("iSENSE", "Media upload failed: Picture already exists on server");
           UploadDataSetFailed("Upload Failed, picture already exists on iSense");
         default :
           UploadDataSetSucceeded(result);
