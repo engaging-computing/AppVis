@@ -111,52 +111,52 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   // Block Properties
   //vis type constants
   @SimpleProperty(description = "VisType for map", category = PropertyCategory.BEHAVIOR)
-    public int Map() {
+    public int VisTypeMap() {
       return MAP_VIS;
     }
 
   @SimpleProperty(description = "VisType for the timeline", category = PropertyCategory.BEHAVIOR)
-    public int Timeline() {
+    public int VisTypeTimeline() {
       return TIMELINE_VIS;
     }
 
   @SimpleProperty(description = "VisType for the scatter plot", category = PropertyCategory.BEHAVIOR)
-    public int Scatter() {
+    public int VisTypeScatter() {
       return SCATTER_VIS;
     }
 
   @SimpleProperty(description = "VisType for bar graph", category = PropertyCategory.BEHAVIOR)
-    public int Bar() {
+    public int VisTypeBar() {
       return BAR_VIS;
     }
 
   @SimpleProperty(description = "VisType for the histogram", category = PropertyCategory.BEHAVIOR)
-    public int Histogram() {
+    public int VisTypeHistogram() {
       return HISTOGRAM_VIS;
     }
 
   @SimpleProperty(description = "VisType for the box", category = PropertyCategory.BEHAVIOR)
-    public int Box() {
+    public int VisTypeBox() {
       return BOX_VIS;
     }
 
   @SimpleProperty(description = "VisType for the pie chart", category = PropertyCategory.BEHAVIOR)
-    public int Pie() {
+    public int VisTypePie() {
       return PIE_VIS;
     }
 
   @SimpleProperty(description = "VisType for a table", category = PropertyCategory.BEHAVIOR)
-    public int Table() {
+    public int VisTypeTable() {
       return TABLE_VIS;
     }
 
   @SimpleProperty(description = "VisType for a summary", category = PropertyCategory.BEHAVIOR)
-    public int Summary() {
+    public int VisTypeSummary() {
       return SUMMARY_VIS;
     }
 
   @SimpleProperty(description = "VisType for photos", category = PropertyCategory.BEHAVIOR)
-    public int Photos() {
+    public int VisTypePhotos() {
       return PHOTOS_VIS;
     }
   // ProjectID
