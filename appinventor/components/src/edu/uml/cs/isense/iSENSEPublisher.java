@@ -63,11 +63,6 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   private static final String CONTRIBUTORNAME = "AppVis"; 
   private static final int QUEUEDEPTH = 30;
 
-  private static final String FAILED_ABSOLUTELY = "Failure: ";
-  private static final String FAILED_ALREADY_ON_SERVER = "Warning: ";
-//  private static final String FAILED_ON_UPLOAD = "Failure: ";
-//  private static final String FAILED_FILE_NOT_FOUND = "Failure: ";
-
   protected static final int MAP_VIS = 0;
   protected static final int TIMELINE_VIS = 1;
   protected static final int SCATTER_VIS = 2;
