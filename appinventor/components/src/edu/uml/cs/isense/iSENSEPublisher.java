@@ -165,16 +165,14 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
       //TODO: Should these be threaded? Different function?
-      try{
-        this.project = api.getProject(ProjectID);
-        this.fields = api.getProjectFields(ProjectID);
-      } catch (Exception e) {
-        Log.e("iSENSE", "Invalid URL! Check Project ID.");
-        return;
-      }
-      if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get project information!");
-      }
+     // try{
+     //   this.project = api.getProject(ProjectID);
+     //   this.fields = api.getProjectFields(ProjectID);
+     // } catch (Exception e) {
+     //   Log.e("iSENSE", "Invalid URL! Check Project ID.");
+     //   return;
+     // }
+      new DownloadMetadata().execute(ProjectID);
     }
 
   //ISense get fields list
@@ -396,7 +394,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   }
 
-  private class DownloadMetadata extends AsncTask<Integer, Void, RProject> {
+  private class DownloadMetadata extends AsyncTask<Integer, Void, RProject> {
     protected RProject doInBackgroud (Integer... integers) {
       RProject ret;
       ret = api.getProject(integer[integers.length-1]);
@@ -405,7 +403,12 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
     protected void onPostExecute(RProject result) {
       this.project = result;
-      ProjectConnected();
+      if(this.project == NULL) {
+        Log.e("couldn't connect to iSense Project");
+        ProjectDoesNotExist();
+      } else {
+        ProjectConnected();
+      }
     }
   }
 
@@ -682,6 +685,11 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleEvent(description = "iSENSE Project Successfully Connected To Project");
     public void ProjectConnected() {
       EventDispatcher.dispatchEvent(this, "ProjectConnected");
+    }
+
+  @SimpleEvent(description = "iSENSE Project does not exist");
+    public void ProjectDoesNotExist() {
+      EventDispatcher.dispatchEvent(this, "ProjectDoesNotExist");
     }
 }
 
