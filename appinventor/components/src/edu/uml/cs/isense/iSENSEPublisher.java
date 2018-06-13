@@ -272,7 +272,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   // Block Functions
   // Upload Data Set in Background
   @SimpleFunction(description = "Upload Data Set to iSENSE")
-    public void UploadDataSet(final String DataSetName, final YailList Fields, final YailList Data) {
+    public void UploadDataSet(final String DataSetName, 
+        final YailList Fields, final YailList Data) {
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data);
       if (pending.size() >= QUEUEDEPTH) {
@@ -286,7 +287,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Upload Dataset With Photo
   @SimpleFunction(description = "Uploads a dataset and a photo")
-    public void UploadDataSetWithPhoto(final String DataSetName, final YailList Fields, final YailList Data, final String Photo) {
+    public void UploadDataSetWithPhoto(final String DataSetName, 
+        final YailList Fields, final YailList Data, final String Photo) {
 
       if (pending.size() >= QUEUEDEPTH) {
         UploadDataSetFailed("Upload queue full!");
@@ -312,7 +314,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           String[] proj = { MediaStore.Images.ImageColumns.DATA };
           Cursor cursor = activity.getContentResolver().query(picUri, proj, null, null, null);
           if (cursor == null) {
-            UploadDataSetFailed("getContentResolver().query() returns null with Uri = " + picUri);
+            UploadDataSetFailed("getContentResolver().query() returns null with Uri = " 
+                + picUri);
             return;
           }
           cursor.moveToFirst();
@@ -343,7 +346,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
     // Append to existing data set
   @SimpleFunction(description = "Append new row of data to existing data set.")
-    public void AppendToDataSet(final int DataSetID, final YailList Fields, final YailList Data) {
+    public void AppendToDataSet(final int DataSetID, 
+        final YailList Fields, final YailList Data) {
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetID, Fields, Data);
       if (pending.size() >= QUEUEDEPTH) {
@@ -413,7 +417,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
 
       // Sleep while we don't have a wifi connection or a mobile connection
-      ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE); 
+      ConnectivityManager cm = (ConnectivityManager) 
+        activity.getSystemService(Context.CONNECTIVITY_SERVICE); 
 
       boolean wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected(); 
       boolean mobi = false; 
@@ -463,7 +468,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss aaa");
         String date = " - " + sdf.format(cal.getTime()).toString();
-        uInfo = api.uploadDataSet(ProjectID, jData, dob.name + date, ContributorKey, CONTRIBUTORNAME); 
+        uInfo = api.uploadDataSet(ProjectID, jData, 
+            dob.name + date, ContributorKey, CONTRIBUTORNAME); 
 
         dataSetId = uInfo.dataSetId; 
         Log.i("iSENSE", "JSON Upload: " + jData.toString()); 
@@ -491,7 +497,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         File pic = new File(dob.path);
         pic.setReadable(true);
         Log.i("iSENSE", "Trying to upload: " + dob.path);
-        uInfo = api.uploadMedia(dataSetId, pic, API.TargetType.DATA_SET, ContributorKey, CONTRIBUTORNAME);
+        uInfo = api.uploadMedia(dataSetId, pic, 
+            API.TargetType.DATA_SET, ContributorKey, CONTRIBUTORNAME);
         dataSetId = uInfo.mediaId;
         Log.i("iSENSE", "MediaID: " + dataSetId);
         if (dataSetId == -1) {
