@@ -397,16 +397,15 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   //threaded task to fetch metadata outside of the ui thread
   private class DownloadMetadata extends AsyncTask<Integer, Void, RProject> {
 
-    protected RProject doInBackgroud (Integer... integers) {
+    protected RProject doInBackground (Integer... integers) {
       RProject ret;
-      ret = api.getProject(integer[integers.length-1]);
+      ret = api.getProject(integers[integers.length-1]);
       return ret;
     }
 
     protected void onPostExecute(RProject result) {
-      this.project = result;
-      if(this.project == NULL) {
-        Log.e("couldn't connect to iSense Project");
+      project = result;
+      if(project == null) {
         ProjectDoesNotExist();
       } else {
         ProjectConnected();
