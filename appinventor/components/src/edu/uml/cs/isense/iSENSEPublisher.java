@@ -686,12 +686,12 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   @SimpleEvent(description = "iSENSE Project Successfully Connected To Project")
     public void ProjectConnected() {
-      EventDispatcher.dispatchEvent(this, "ProjectConnected")
+      EventDispatcher.dispatchEvent(this, "ProjectConnected");
     }
 
   @SimpleEvent(description = "iSENSE Project does not exist")
     public void ProjectDoesNotExist() {
-      EventDispatcher.dispatchEvent(this, "ProjectDoesNotExist")
+      EventDispatcher.dispatchEvent(this, "ProjectDoesNotExist");
     }
 }
 
