@@ -394,7 +394,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   }
 
+  //threaded task to fetch metadata outside of the ui thread
   private class DownloadMetadata extends AsyncTask<Integer, Void, RProject> {
+
     protected RProject doInBackgroud (Integer... integers) {
       RProject ret;
       ret = api.getProject(integer[integers.length-1]);
