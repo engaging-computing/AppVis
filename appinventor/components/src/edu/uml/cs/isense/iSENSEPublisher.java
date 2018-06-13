@@ -396,6 +396,19 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   }
 
+  private class DownloadMetadata extends AsncTask<Integer, Void, RProject> {
+    protected RProject doInBackgroud (Integer... integers) {
+      RProject ret;
+      ret = api.getProject(integer[integers.length-1]);
+      return ret;
+    }
+
+    protected void onPostExecute(RProject result) {
+      this.project = result;
+      ProjectConnected();
+    }
+  }
+
   // Private asynchronous task class that allows background uploads
   private class UploadTask extends AsyncTask<Void, Void, UploadInfo> {
 
@@ -664,6 +677,11 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleEvent(description = "iSENSE Upload Data Set Failed")
     public void UploadDataSetFailed(String message) {
       EventDispatcher.dispatchEvent(this, "UploadDataSetFailed", message);
+    }
+
+  @SimpleEvent(description = "iSENSE Project Successfully Connected To Project");
+    public void ProjectConnected() {
+      EventDispatcher.dispatchEvent(this, "ProjectConnected");
     }
 }
 
