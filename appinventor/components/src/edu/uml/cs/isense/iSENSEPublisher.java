@@ -395,6 +395,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   }
 
+  //Object to unify metadata members used by the extension
   private class Metadata {
     public RProject project;
     public ArrayList <RProjectField> fields;
