@@ -176,6 +176,7 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense get fields list
+  //TODO: CSV, not a list. Make it a list
   @SimpleFunction(description = "Get the fields in the projects as a list")
     public String GetFieldsList() {
       String retFields = "";
@@ -394,17 +395,24 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   }
 
-  //threaded task to fetch metadata outside of the ui thread
-  private class DownloadMetadata extends AsyncTask<Integer, Void, RProject> {
+  private class Metadata {
+    public RProject project;
+    public ArrayList <RProjectField> fields;
+  }
 
-    protected RProject doInBackground (Integer... integers) {
-      RProject ret;
-      ret = api.getProject(integers[integers.length-1]);
+  //Asynchronous task to fetch project metadata outside of the ui thread. 
+  private class DownloadMetadata extends AsyncTask<Integer, Void, Metadata> {
+
+    protected Metadata doInBackground (Integer... integers) {
+      Metadata ret = new Metadata();
+      ret.project = api.getProject(integers[integers.length-1]);
+      ret.fields = api.getProjectFields(integers[integers.length-1]);
       return ret;
     }
 
-    protected void onPostExecute(RProject result) {
-      project = result;
+    protected void onPostExecute(Metadata result) {
+      project = result.project;
+      fields = result.fields;
       if(project == null) {
         ProjectDoesNotExist();
       } else {
