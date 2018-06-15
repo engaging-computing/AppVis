@@ -54,7 +54,7 @@ import edu.uml.cs.isense.objects.RProject;
     //iconName = "images/extension.png")
     iconName = "https://raw.githubusercontent.com/codom/appinventor-sources/master/appinventor/appengine/src/com/google/appinventor/images/isense.png")
 @SimpleObject(external = true)
-@UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
+@UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE,android.permission.READ_EXTERNAL_STORAGE")
 @UsesLibraries(libraries = "isense.jar")
 
 public final class iSENSEPublisher extends AndroidNonvisibleComponent implements Component {
@@ -554,11 +554,11 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Get Dataset By Field
   @SimpleFunction(description = "Get the Data Sets for the current project")
-    public YailList GetDataFromProjectByField(final String Field) {
+    public YailList GetDataSetsByField(final String Field) {
       ArrayList<String> result = api.getDataSetsByField(ProjectID, Field);
       return YailList.makeList(result); 
     }
-  
+
   // Get Time (formatted for iSENSE Upload)
   @SimpleFunction(description = "Gets the current time. It is formatted correctly for iSENSE")
     public String GetTime() {
