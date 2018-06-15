@@ -554,11 +554,11 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Get Dataset By Field
   @SimpleFunction(description = "Get the Data Sets for the current project")
-    public YailList GetDataSetsByField(final String Field) {
+    public YailList GetDataFromProjectByField(final String Field) {
       ArrayList<String> result = api.getDataSetsByField(ProjectID, Field);
       return YailList.makeList(result); 
     }
-
+  
   // Get Time (formatted for iSENSE Upload)
   @SimpleFunction(description = "Gets the current time. It is formatted correctly for iSENSE")
     public String GetTime() {
