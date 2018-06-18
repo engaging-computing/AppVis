@@ -55,7 +55,7 @@ import edu.uml.cs.isense.objects.RProject;
     iconName = "https://raw.githubusercontent.com/codom/appinventor-sources/master/appinventor/appengine/src/com/google/appinventor/images/isense.png")
 @SimpleObject(external = true)
 @UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE,android.permission.READ_EXTERNAL_STORAGE")
-@UsesLibraries(libraries = "isense.jar")
+@UsesLibraries(libraries = "isense.jar," + "httpcore-4.3.2.jar," + "httpmime-4.3.4.jar")
 
 public final class iSENSEPublisher extends AndroidNonvisibleComponent implements Component {
 
