@@ -52,9 +52,13 @@ import edu.uml.cs.isense.objects.RProject;
     category = ComponentCategory.EXTENSION,
     nonVisible = true,
     //iconName = "images/extension.png")
-    iconName = "https://raw.githubusercontent.com/codom/appinventor-sources/master/appinventor/appengine/src/com/google/appinventor/images/isense.png")
+    iconName = "https://raw.githubusercontent.com/codom/"
+      +"appinventor-sources/master/appinventor/appengine/src/com"
+      +"/google/appinventor/images/isense.png")
 @SimpleObject(external = true)
-@UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE,android.permission.READ_EXTERNAL_STORAGE")
+@UsesPermissions(permissionNames = "android.permission.INTERNET" 
+  + ",android.permission.ACCESS_NETWORK_STATE" 
+  + ",android.permission.READ_EXTERNAL_STORAGE")
 @UsesLibraries(libraries = "isense.jar," + "httpcore-4.3.2.jar," + "httpmime-4.3.4.jar")
 
 public final class iSENSEPublisher extends AndroidNonvisibleComponent implements Component {
@@ -105,63 +109,76 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Block Properties
   //vis type constants
-  @SimpleProperty(description = "VisType for map", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for map", 
+   category = PropertyCategory.BEHAVIOR)
     public int VisTypeMap() {
       return MAP_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the timeline", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the timeline", 
+   category = PropertyCategory.BEHAVIOR)
     public int VisTypeTimeline() {
       return TIMELINE_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the scatter plot", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the scatter plot", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeScatter() {
       return SCATTER_VIS;
     }
 
-  @SimpleProperty(description = "VisType for bar graph", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for bar graph", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeBar() {
       return BAR_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the histogram", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the histogram", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeHistogram() {
       return HISTOGRAM_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the box", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the box", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeBox() {
       return BOX_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the pie chart", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the pie chart", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypePie() {
       return PIE_VIS;
     }
 
-  @SimpleProperty(description = "VisType for a table", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for a table", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeTable() {
       return TABLE_VIS;
     }
 
-  @SimpleProperty(description = "VisType for a summary", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for a summary", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeSummary() {
       return SUMMARY_VIS;
     }
 
-  @SimpleProperty(description = "VisType for photos", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for photos", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypePhotos() {
       return PHOTOS_VIS;
     }
   // ProjectID
-  @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project ID", 
+  category = PropertyCategory.BEHAVIOR)
     public int ProjectID() {
       return ProjectID;
     }
 
-  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
-    @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, 
+  defaultValue = "")
+    @SimpleProperty(description = "iSENSE Project ID", 
+    category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
       //TODO: Should these be threaded? Different function?
@@ -187,7 +204,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense project name
-  @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Name", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectName() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -197,7 +215,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense like count
-  @SimpleProperty(description = "iSENSE Project Like Count", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Like Count", 
+  category = PropertyCategory.BEHAVIOR)
     public int ProjectLikeCount() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -207,7 +226,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense project author
-  @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Author", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectAuthor() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -217,7 +237,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense project creation date
-  @SimpleProperty(description = "iSENSE Project Creation Date", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Creation Date", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectDateCreated() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -227,7 +248,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
  
   //ISense project owner url
-  @SimpleProperty(description = "iSENSE Project Account URL", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Account URL", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectOwnerURL() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -237,7 +259,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   
   //ISense project isHidden?
-  @SimpleProperty(description = "iSENSE Project isHidden. Returns true if hidden, flase if visible", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project isHidden. " + 
+  "Returns true if hidden, flase if visible", 
+  category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsHidden() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -247,7 +271,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
  
   //ISense project isFeatured?
-  @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, false if normal", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project isFeatured. " 
+  + "Returns true if featured, false if normal", 
+  category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsFeatured() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -257,13 +283,16 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
  
   // Contributor Key
-  @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Contributor Key", 
+  category = PropertyCategory.BEHAVIOR)
     public String ContributorKey() {
       return ContributorKey;
     }
 
-  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
-    @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, 
+  defaultValue = "")
+    @SimpleProperty(description = "iSENSE Contributor Key", 
+    category = PropertyCategory.BEHAVIOR)
     public void ContributorKey(String ContributorKey) {
       this.ContributorKey = ContributorKey;
     }
@@ -560,7 +589,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   // Get Time (formatted for iSENSE Upload)
-  @SimpleFunction(description = "Gets the current time. It is formatted correctly for iSENSE")
+  @SimpleFunction(description = "Gets the current time."
+  + "It is formatted correctly for iSENSE")
     public String GetTime() {
       Calendar cal = Calendar.getInstance();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -568,13 +598,15 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   // Get Number of Pending Uploads (Advanced Feature)
-  @SimpleFunction(description = "Gets number of pending background uploads. Advanced feature.")
+  @SimpleFunction(description = "Gets number of pending"
+  + "background uploads. Advanced feature.")
     public int GetNumberPendingUploads() {
       return numPending; 
     }
 
   // Get visualization url for this project
-  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format.")
+  @SimpleFunction(description = "Gets URL for project " 
+  + "visualization in simple fullscreen format.")
     public String GetVisURL() {
       if (UseDev) {
         return DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis="; 
@@ -583,7 +615,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
     }
 
-  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format with an overloaded vistype")
+  @SimpleFunction(description = "Gets URL for project visualization"
+  + "in simple fullscreen format with an overloaded vistype")
     public String GetCustomVisURL(int VisType) {
       String url;
       if (UseDev) {
