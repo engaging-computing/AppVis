@@ -181,26 +181,18 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
-      //TODO: Should these be threaded? Different function?
-     // try{
-     //   this.project = api.getProject(ProjectID);
-     //   this.fields = api.getProjectFields(ProjectID);
-     // } catch (Exception e) {
-     //   Log.e("iSENSE", "Invalid URL! Check Project ID.");
-     //   return;
-     // }
       new DownloadMetadata().execute(ProjectID);
     }
 
   //ISense get fields list
   //TODO: CSV, not a list. Make it a list
   @SimpleFunction(description = "Get the fields in the projects as a list")
-    public String GetFieldsList() {
-      String retFields = "";
+    public YailList GetFieldsList() {
+      ArrayList<String> fieldsList = new ArrayList<String>();
       for (RProjectField j : fields) {
-        retFields += j.name + ",";
+        fieldsList.add(j.name);
       }
-      return retFields;
+      return YailList.makeList(fieldsList);
     }
 
   //ISense project name
