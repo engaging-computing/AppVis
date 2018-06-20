@@ -52,21 +52,20 @@ import edu.uml.cs.isense.objects.RProject;
     category = ComponentCategory.EXTENSION,
     nonVisible = true,
     //iconName = "images/extension.png")
-    iconName = "https://raw.githubusercontent.com/codom/appinventor-sources/master/appinventor/appengine/src/com/google/appinventor/images/isense.png")
+    iconName = "https://raw.githubusercontent.com/codom/"
+      +"appinventor-sources/master/appinventor/appengine/src/com"
+      +"/google/appinventor/images/isense.png")
 @SimpleObject(external = true)
-@UsesPermissions(permissionNames = "android.permission.INTERNET,android.permission.ACCESS_NETWORK_STATE")
-@UsesLibraries(libraries = "isense.jar")
+@UsesPermissions(permissionNames = "android.permission.INTERNET" 
+  + ",android.permission.ACCESS_NETWORK_STATE" 
+  + ",android.permission.READ_EXTERNAL_STORAGE")
+@UsesLibraries(libraries = "isense.jar," + "httpcore-4.3.2.jar," + "httpmime-4.3.4.jar")
 
 public final class iSENSEPublisher extends AndroidNonvisibleComponent implements Component {
 
   public static final int VERSION = 1; 
   private static final String CONTRIBUTORNAME = "AppVis"; 
   private static final int QUEUEDEPTH = 30;
-
-  private static final String FAILED_ABSOLUTELY = "Failure: ";
-  private static final String FAILED_ALREADY_ON_SERVER = "Warning: ";
-//  private static final String FAILED_ON_UPLOAD = "Failure: ";
-//  private static final String FAILED_FILE_NOT_FOUND = "Failure: ";
 
   protected static final int MAP_VIS = 0;
   protected static final int TIMELINE_VIS = 1;
@@ -110,90 +109,95 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Block Properties
   //vis type constants
-  @SimpleProperty(description = "VisType for map", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for map", 
+   category = PropertyCategory.BEHAVIOR)
     public int VisTypeMap() {
       return MAP_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the timeline", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the timeline", 
+   category = PropertyCategory.BEHAVIOR)
     public int VisTypeTimeline() {
       return TIMELINE_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the scatter plot", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the scatter plot", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeScatter() {
       return SCATTER_VIS;
     }
 
-  @SimpleProperty(description = "VisType for bar graph", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for bar graph", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeBar() {
       return BAR_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the histogram", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the histogram", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeHistogram() {
       return HISTOGRAM_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the box", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the box", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeBox() {
       return BOX_VIS;
     }
 
-  @SimpleProperty(description = "VisType for the pie chart", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for the pie chart", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypePie() {
       return PIE_VIS;
     }
 
-  @SimpleProperty(description = "VisType for a table", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for a table", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeTable() {
       return TABLE_VIS;
     }
 
-  @SimpleProperty(description = "VisType for a summary", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for a summary", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypeSummary() {
       return SUMMARY_VIS;
     }
 
-  @SimpleProperty(description = "VisType for photos", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "VisType for photos", 
+  category = PropertyCategory.BEHAVIOR)
     public int VisTypePhotos() {
       return PHOTOS_VIS;
     }
   // ProjectID
-  @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project ID", 
+  category = PropertyCategory.BEHAVIOR)
     public int ProjectID() {
       return ProjectID;
     }
 
-  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
-    @SimpleProperty(description = "iSENSE Project ID", category = PropertyCategory.BEHAVIOR)
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, 
+  defaultValue = "")
+    @SimpleProperty(description = "iSENSE Project ID", 
+    category = PropertyCategory.BEHAVIOR)
     public void ProjectID(int ProjectID) {
       this.ProjectID = ProjectID;
-      //TODO: Should these be threaded? Different function?
-      try{
-        this.project = api.getProject(ProjectID);
-        this.fields = api.getProjectFields(ProjectID);
-      } catch (Exception e) {
-        Log.e("iSENSE", "Invalid URL! Check Project ID.");
-        return;
-      }
-      if(this.project == null || this.fields == null) {
-        Log.e("iSENSE", "Couldn't get project information!");
-      }
+      new DownloadMetadata().execute(ProjectID);
     }
 
   //ISense get fields list
+  //TODO: CSV, not a list. Make it a list
   @SimpleFunction(description = "Get the fields in the projects as a list")
-    public String GetFieldsList() {
-      String retFields = "";
+    public YailList GetFieldsList() {
+      ArrayList<String> fieldsList = new ArrayList<String>();
       for (RProjectField j : fields) {
-        retFields += j.name + ",";
+        fieldsList.add(j.name);
       }
-      return retFields;
+      return YailList.makeList(fieldsList);
     }
 
   //ISense project name
-  @SimpleProperty(description = "iSENSE Project Name", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Name", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectName() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -203,7 +207,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense like count
-  @SimpleProperty(description = "iSENSE Project Like Count", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Like Count", 
+  category = PropertyCategory.BEHAVIOR)
     public int ProjectLikeCount() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -213,7 +218,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense project author
-  @SimpleProperty(description = "iSENSE Project Author", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Author", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectAuthor() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -223,7 +229,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   //ISense project creation date
-  @SimpleProperty(description = "iSENSE Project Creation Date", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Creation Date", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectDateCreated() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -233,7 +240,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
  
   //ISense project owner url
-  @SimpleProperty(description = "iSENSE Project Account URL", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project Account URL", 
+  category = PropertyCategory.BEHAVIOR)
     public String ProjectOwnerURL() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -243,7 +251,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   
   //ISense project isHidden?
-  @SimpleProperty(description = "iSENSE Project isHidden. Returns true if hidden, flase if visible", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project isHidden. " + 
+  "Returns true if hidden, flase if visible", 
+  category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsHidden() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -253,7 +263,9 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
  
   //ISense project isFeatured?
-  @SimpleProperty(description = "iSENSE Project isFeatured. Returns true if featured, false if normal", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Project isFeatured. " 
+  + "Returns true if featured, false if normal", 
+  category = PropertyCategory.BEHAVIOR)
     public boolean ProjecctIsFeatured() {
       if(this.project == null || this.fields == null) {
         Log.e("iSENSE", "Couldn't get project information!");
@@ -263,13 +275,16 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
  
   // Contributor Key
-  @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
+  @SimpleProperty(description = "iSENSE Contributor Key", 
+  category = PropertyCategory.BEHAVIOR)
     public String ContributorKey() {
       return ContributorKey;
     }
 
-  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, defaultValue = "")
-    @SimpleProperty(description = "iSENSE Contributor Key", category = PropertyCategory.BEHAVIOR)
+  @DesignerProperty(editorType = PropertyTypeConstants.PROPERTY_TYPE_STRING, 
+  defaultValue = "")
+    @SimpleProperty(description = "iSENSE Contributor Key", 
+    category = PropertyCategory.BEHAVIOR)
     public void ContributorKey(String ContributorKey) {
       this.ContributorKey = ContributorKey;
     }
@@ -277,7 +292,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   // Block Functions
   // Upload Data Set in Background
   @SimpleFunction(description = "Upload Data Set to iSENSE")
-    public void UploadDataSet(final String DataSetName, final YailList Fields, final YailList Data) {
+    public void UploadDataSet(final String DataSetName, 
+        final YailList Fields, final YailList Data) {
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetName, Fields, Data);
       if (pending.size() >= QUEUEDEPTH) {
@@ -291,7 +307,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Upload Dataset With Photo
   @SimpleFunction(description = "Uploads a dataset and a photo")
-    public void UploadDataSetWithPhoto(final String DataSetName, final YailList Fields, final YailList Data, final String Photo) {
+    public void UploadDataSetWithPhoto(final String DataSetName, 
+        final YailList Fields, final YailList Data, final String Photo) {
 
       if (pending.size() >= QUEUEDEPTH) {
         UploadDataSetFailed("Upload queue full!");
@@ -317,7 +334,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
           String[] proj = { MediaStore.Images.ImageColumns.DATA };
           Cursor cursor = activity.getContentResolver().query(picUri, proj, null, null, null);
           if (cursor == null) {
-            UploadDataSetFailed("getContentResolver().query() returns null with Uri = " + picUri);
+            UploadDataSetFailed("getContentResolver().query() returns null with Uri = " 
+                + picUri);
             return;
           }
           cursor.moveToFirst();
@@ -348,7 +366,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
     // Append to existing data set
   @SimpleFunction(description = "Append new row of data to existing data set.")
-    public void AppendToDataSet(final int DataSetID, final YailList Fields, final YailList Data) {
+    public void AppendToDataSet(final int DataSetID, 
+        final YailList Fields, final YailList Data) {
       // Create new "DataObject" and add to upload queue
       DataObject dob = new DataObject(DataSetID, Fields, Data);
       if (pending.size() >= QUEUEDEPTH) {
@@ -397,6 +416,33 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
   }
 
+  //Object to unify metadata members used by the extension
+  private class Metadata {
+    public RProject project;
+    public ArrayList <RProjectField> fields;
+  }
+
+  //Asynchronous task to fetch project metadata outside of the ui thread. 
+  private class DownloadMetadata extends AsyncTask<Integer, Void, Metadata> {
+
+    protected Metadata doInBackground (Integer... integers) {
+      Metadata ret = new Metadata();
+      ret.project = api.getProject(integers[integers.length-1]);
+      ret.fields = api.getProjectFields(integers[integers.length-1]);
+      return ret;
+    }
+
+    protected void onPostExecute(Metadata result) {
+      project = result.project;
+      fields = result.fields;
+      if(project == null) {
+        ProjectDoesNotExist();
+      } else {
+        ProjectConnected();
+      }
+    }
+  }
+
   // Private asynchronous task class that allows background uploads
   private class UploadTask extends AsyncTask<Void, Void, UploadInfo> {
 
@@ -418,7 +464,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
 
       // Sleep while we don't have a wifi connection or a mobile connection
-      ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE); 
+      ConnectivityManager cm = (ConnectivityManager) 
+        activity.getSystemService(Context.CONNECTIVITY_SERVICE); 
 
       boolean wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected(); 
       boolean mobi = false; 
@@ -468,7 +515,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss aaa");
         String date = " - " + sdf.format(cal.getTime()).toString();
-        uInfo = api.uploadDataSet(ProjectID, jData, dob.name + date, ContributorKey, CONTRIBUTORNAME); 
+        uInfo = api.uploadDataSet(ProjectID, jData, 
+            dob.name + date, ContributorKey, CONTRIBUTORNAME); 
 
         dataSetId = uInfo.dataSetId; 
         Log.i("iSENSE", "JSON Upload: " + jData.toString()); 
@@ -496,7 +544,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
         File pic = new File(dob.path);
         pic.setReadable(true);
         Log.i("iSENSE", "Trying to upload: " + dob.path);
-        uInfo = api.uploadMedia(dataSetId, pic, API.TargetType.DATA_SET, ContributorKey, CONTRIBUTORNAME);
+        uInfo = api.uploadMedia(dataSetId, pic, 
+            API.TargetType.DATA_SET, ContributorKey, CONTRIBUTORNAME);
         dataSetId = uInfo.mediaId;
         Log.i("iSENSE", "MediaID: " + dataSetId);
         if (dataSetId == -1) {
@@ -526,13 +575,14 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
 
   // Get Dataset By Field
   @SimpleFunction(description = "Get the Data Sets for the current project")
-    public YailList GetDataFromProjectByField(final String Field) {
+    public YailList GetDataSetsByField(final String Field) {
       ArrayList<String> result = api.getDataSetsByField(ProjectID, Field);
       return YailList.makeList(result); 
     }
-  
+
   // Get Time (formatted for iSENSE Upload)
-  @SimpleFunction(description = "Gets the current time. It is formatted correctly for iSENSE")
+  @SimpleFunction(description = "Gets the current time."
+  + "It is formatted correctly for iSENSE")
     public String GetTime() {
       Calendar cal = Calendar.getInstance();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -540,13 +590,15 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
     }
 
   // Get Number of Pending Uploads (Advanced Feature)
-  @SimpleFunction(description = "Gets number of pending background uploads. Advanced feature.")
+  @SimpleFunction(description = "Gets number of pending"
+  + "background uploads. Advanced feature.")
     public int GetNumberPendingUploads() {
       return numPending; 
     }
 
   // Get visualization url for this project
-  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format.")
+  @SimpleFunction(description = "Gets URL for project " 
+  + "visualization in simple fullscreen format.")
     public String GetVisURL() {
       if (UseDev) {
         return DevURL + "/projects/" + ProjectID + "/data_sets?presentation=true&vis="; 
@@ -555,7 +607,8 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
       }
     }
 
-  @SimpleFunction(description = "Gets URL for project visualization in simple fullscreen format with an overloaded vistype")
+  @SimpleFunction(description = "Gets URL for project visualization"
+  + "in simple fullscreen format with an overloaded vistype")
     public String GetCustomVisURL(int VisType) {
       String url;
       if (UseDev) {
@@ -662,6 +715,16 @@ public final class iSENSEPublisher extends AndroidNonvisibleComponent implements
   @SimpleEvent(description = "iSENSE Upload Data Set Failed")
     public void UploadDataSetFailed(String message) {
       EventDispatcher.dispatchEvent(this, "UploadDataSetFailed", message);
+    }
+
+  @SimpleEvent(description = "iSENSE Project Successfully Connected To Project")
+    public void ProjectConnected() {
+      EventDispatcher.dispatchEvent(this, "ProjectConnected");
+    }
+
+  @SimpleEvent(description = "iSENSE Project does not exist")
+    public void ProjectDoesNotExist() {
+      EventDispatcher.dispatchEvent(this, "ProjectDoesNotExist");
     }
 }
 
